@@ -28,8 +28,17 @@
 
 <style>
 
+.act-item {
+  transition: all 1s;
+}
+
+a { 
+  text-decoration: none;
+}
+
 a:hover {
   z-index: 1;
+  text-decoration: none;
 }
 
 .act {
@@ -42,13 +51,7 @@ a:hover {
   width: 370px;
   height: 370px;
 
-  /*
-  background-size: 110%;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
-  */
-  transition: all 0.2s ease-in-out;
+  transition: all 0.1s ease-in-out;
   transform: scale(1,1);
 }
 
@@ -62,7 +65,6 @@ a:hover {
   font-size: 36px;
   color: white;
   font-variant: small-caps;
-  font-weight: bold;
   align-self: flex-end;
   width: 100%;
   height: 74px;

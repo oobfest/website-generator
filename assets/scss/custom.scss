@@ -1,0 +1,51 @@
+@font-face { font-family: 'gotham-black'; src: url(/assets/fonts/gotham-black.ttf); }
+@font-face { font-family: 'gotham-book'; src: url(/assets/fonts/gotham-book.ttf); }
+
+body { 
+  color: white;
+  font-family: 'gotham-book', sans-serif;
+  background-color: #0a0a0a;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+}
+
+h1, h2 {
+  font-family: 'gotham-black', sans-serif;
+  color: #f9a01b;
+  text-transform: uppercase;
+  font-size: 46px;
+
+  a:focus { color: #f9a01b; }
+}
+
+a, .btn-link             { color: white; text-shadow: 2px 2px 0px rgba(0,0,0,0.2); }
+a:hover, .btn-link:hover { color: white; }
+a:focus, .btn-link:focus { color: white; }
+
+.full-height { min-height: 100vh; max-height: 1080px;}
+.dark-background  { background-color: #262626; }
+
+.color-red    { color:#f04c23; }
+.color-blue   { color:#13818d; }
+.color-orange { color:#f9a11b; }
+.color-green  { color:#6d8e3b; }
+.color-offwhite { color:#ffe9a3; }
+
+.icon { height: auto; width: 100%; max-width: 180px; }
+
+.modal { color: #212529; text-shadow: none; }
+
+/*
+.btn-primary { background-color: #15808c; border-color: #15808c;}
+.btn-primary:hover, .btn-primary:active, .btn-primary:active:focus { background-color: #116a73 !important; border-color: #116a73 !important}
+*/
+
+.container { margin-bottom: 125px; }
+
+.bg-dark { background-color: #0a0a0a; }
+.blue    { background-color: #12808D; } .blue:hover   { background-color: #094249; }
+.red   { background-color: #F04B22; } .red:hover    { background-color: #b92f0d; }
+.yellow  { background-color: #F89F1C; } .yellow:hover { background-color: #c27606; }
+.green   { background-color: #6C8D3B; } .green:hover  { background-color: #435724; }
+
+a.nav-link.underline-on-hover:hover { text-decoration: underline; }
+a.no-underline-on-hover:hover { text-decoration: none !important; }

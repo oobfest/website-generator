@@ -1,6 +1,6 @@
 <template lang="pug">
   main
-    .container-fluid.yay
+    .container-fluid
       navigation
       nuxt
     navigation-footer
@@ -16,8 +16,7 @@
 </script>
 
 <style>
-  .yay {
-    background: url('/assets/images/marcella-arguello-cropped-dark.jpeg') no-repeat bottom center fixed; 
-    background-size: cover;
+  main {
+    background-color: #1A1A1A;
   }
 </style>

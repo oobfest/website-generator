@@ -1,20 +1,16 @@
 <template lang="pug">
 div
-  .row.justify-content-center
+  .row
     .col-md.text-center
       b-button.m-1(size="lg" type="button" @click="actTypeFilter='all'",:variant="actTypeFilter == 'all' ? 'primary' : 'secondary'") All Acts
-    .col-md.text-center
-      b-button.m-1(size="lg" type="button" @click="featuredActFilter = !featuredActFilter",:variant="featuredActFilter ? 'warning' : 'secondary'") Featured
-    .col-md.text-center  
-      b-button.m-1(size="lg" type="button" @click="actTypeFilter='Improv'",:variant="actTypeFilter == 'Improv' ? 'primary' : 'secondary'") Improv
-    .col-md.text-center  
-      b-button.m-1(size="lg" type="button" @click="actTypeFilter='Sketch'",:variant="actTypeFilter == 'Sketch' ? 'primary' : 'secondary'") Sketch
-    .col-md.text-center  
+      //b-button.m-1(size="lg" type="button" @click="featuredActFilter = !featuredActFilter",:variant="featuredActFilter ? 'warning' : 'secondary'") Featured  
+      b-button.m-1(size="lg" type="button" @click="actTypeFilter='Improv'",:variant="actTypeFilter == 'Improv' ? 'primary' : 'secondary'") Improv  
+      b-button.m-1(size="lg" type="button" @click="actTypeFilter='Sketch'",:variant="actTypeFilter == 'Sketch' ? 'primary' : 'secondary'") Sketch  
       b-button.m-1(size="lg" type="button" @click="actTypeFilter='Stand-Up'",:variant="actTypeFilter == 'Stand-Up' ? 'primary' : 'secondary'") Stand-Up
   .row
     .col
-      .acts
-        act-tile(v-for="act in filteredActs",:key="act._id",:actName="act.actName",:imageUrl="act.imageUrl",:domain="act.domain")
+      transition-group.acts(name="act")
+        act-tile.act-item(v-for="act in filteredActs",:key="act._id",:actName="act.actName",:imageUrl="act.imageUrl",:domain="act.domain")
 
 </template>
 
@@ -47,6 +43,19 @@ div
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  transition: transform 1s;
+}
+
+.act-item {
+  transition: all 1s;
+  display: inline-block;
+}
+.act-enter, .act-leave-to {
+  opacity: 0;
+}
+.act-leave-active {
+  position: absolute;
+  z-index: 0;
 }
 
 </style>
