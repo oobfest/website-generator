@@ -24,6 +24,7 @@ div.text-center
                   li Food and Drink Discounts
                 
                 button.btn.btn-primary.btn-lg(type="button" @click="cardState++") Buy Now
+                button.btn.btn-primary(type="button" @click="fancy") Help
               .col(v-show="cardState==2").text-left.align-self-center
                 .form-group
                   label(for="name") Name
@@ -85,20 +86,28 @@ div.text-center
 </template>
 
 <script>
+  import axios from 'axios'
 
   export default {
     data() {
       return {
         cardState: 1,
         badge: {
-          name: '', 
-          email: '',
-          phone: '',
+          name: 'Fake', 
+          email: 'sld.potato@gmail.com',
+          phone: '2321',
           quantity: 1
         }
       }
     },
     methods: {
+      fancy() {
+        axios
+        .get('https://tlstest.paypal.com/')
+        .then((response)=> {
+          alert(response)
+        })
+      },
       isValid() {
         return this.badge.name != '' && 
                this.badge.email != '' && 
@@ -142,6 +151,7 @@ div.text-center
           return actions.request
             .post('http://app.oobfest.com/api/paypal/create-badge-all-sale', self.badge)
             .then(function(response) {
+              console.log("RESPONSE", response.id)
               return response.id;
             })
         },
