@@ -1,9 +1,9 @@
 <template lang="pug">
 div(style="padding-bottom:3em")
   .row.align-items-center
-    .col
+    .col-md
       img.img-fluid.rounded.float-right(:src="scaledImageUrl")
-    .col.act-details
+    .col-md.act-details
       h1 {{actName}}
       p {{publicDescription}}
       section(v-if="performers.length > 1")

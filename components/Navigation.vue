@@ -8,7 +8,7 @@
         li.nav-item
           a.m-2(href="/lineup")
             span.footer-link-text Lineup
-        //li.nav-item
+        li.nav-item
           a.m-2(href="/badges")
             span.footer-link.text Get Badges
 

@@ -37,7 +37,7 @@
       .col-md-6
         h4 Out of Bounds is a Certified 501(c)(3) Nonprofit
         p Our mission is to bring world-wide attention to the Austin comedy community by featuring improv, sketch, podcasts, musical, variety and stand-up, strengthening performer networks, providing educational opportunities to our talent and stimulating both Austin tourism and industry interest.
-        img(src="~/assets/images/cultural-arts-logo.png" style="max-width: 500px")
+        img.img-fluid(src="~/assets/images/cultural-arts-logo.png" style="width:100%; max-width: 500px")
 </template>
 
 <style>
