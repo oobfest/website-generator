@@ -24,7 +24,6 @@ div.text-center
                   li Food and Drink Discounts
                 
                 button.btn.btn-primary.btn-lg(type="button" @click="cardState++") Buy Now
-                button.btn.btn-primary(type="button" @click="fancy") Help
               .col(v-show="cardState==2").text-left.align-self-center
                 .form-group
                   label(for="name") Name
@@ -86,8 +85,6 @@ div.text-center
 </template>
 
 <script>
-  import axios from 'axios'
-
   export default {
     data() {
       return {
@@ -101,13 +98,6 @@ div.text-center
       }
     },
     methods: {
-      fancy() {
-        axios
-        .get('https://tlstest.paypal.com/')
-        .then((response)=> {
-          alert(response)
-        })
-      },
       isValid() {
         return this.badge.name != '' && 
                this.badge.email != '' && 
@@ -127,9 +117,9 @@ div.text-center
       paypal.Button.render({
         env: 'production',
         commit: true,
-        client: {
-          production: 'AVhWsLhp96785Ao4q4YLVm4WRVOZN-YX1WE8llo0EUHYt9ysWmRl1mBYiSnrqdH_vjBTKSOR6u2ItXSg'
-        },
+        //client: {
+        //  production: 'AVhWsLhp96785Ao4q4YLVm4WRVOZN-YX1WE8llo0EUHYt9ysWmRl1mBYiSnrqdH_vjBTKSOR6u2ItXSg'
+        //},
         style: {
           layout: 'vertical',
           size:   'medium',
