@@ -90,9 +90,9 @@ div.text-center
       return {
         cardState: 1,
         badge: {
-          name: 'Fake', 
-          email: 'sld.potato@gmail.com',
-          phone: '2321',
+          name: '', 
+          email: '',
+          phone: '',
           quantity: 1
         }
       }
@@ -117,9 +117,6 @@ div.text-center
       paypal.Button.render({
         env: 'production',
         commit: true,
-        //client: {
-        //  production: 'AVhWsLhp96785Ao4q4YLVm4WRVOZN-YX1WE8llo0EUHYt9ysWmRl1mBYiSnrqdH_vjBTKSOR6u2ItXSg'
-        //},
         style: {
           layout: 'vertical',
           size:   'medium',
