@@ -36,5 +36,5 @@
 
 <style scoped>
   footer { background-color: #0a0a0a; }
-  .navbar { padding: 2em; }
+  .navbar { padding: 1.5em; }
 </style>

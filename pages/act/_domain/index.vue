@@ -1,7 +1,8 @@
 <template lang="pug">
+div(style="padding-bottom:3em")
   .row.align-items-center
     .col
-      img.img-fluid.rounded.float-right(:src="imageUrl")
+      img.img-fluid.rounded.float-right(:src="scaledImageUrl")
     .col.act-details
       h1 {{actName}}
       p {{publicDescription}}
@@ -40,6 +41,9 @@ export default {
       performers.push(this.primaryContactName)
       this.additionalMembers.forEach(m=> {if(m.attending) performers.push(m.name)})
       return performers
+    },
+    scaledImageUrl() {
+      return this.imageUrl.substr(0, this.imageUrl.length-4) + 'l.jpeg'
     }
   }
 }
@@ -50,7 +54,7 @@ export default {
 .act-details {
   border: 2px solid grey;
   margin-right: 15px;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.75);
   box-shadow: 3px 3px 5px black;
 }
 </style>

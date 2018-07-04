@@ -1,7 +1,7 @@
 <template lang="pug">
   .row
     .col
-      h1.text-center Lineup
+      h2.text-center Lineup
       acts-grid(:acts="acts")
 </template>
 

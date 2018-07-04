@@ -6,15 +6,22 @@ body {
   font-family: 'gotham-book', sans-serif;
   background-color: #0a0a0a;
   text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+  font-size: 21px;
 }
 
 h1, h2 {
   font-family: 'gotham-black', sans-serif;
   color: #f9a01b;
-  text-transform: uppercase;
   font-size: 46px;
-
   a:focus { color: #f9a01b; }
+}
+
+h1 {
+  text-transform: uppercase;
+}
+
+h2 {
+  font-variant: small-caps;
 }
 
 a, .btn-link             { color: white; text-shadow: 2px 2px 0px rgba(0,0,0,0.2); }
@@ -43,9 +50,17 @@ a:focus, .btn-link:focus { color: white; }
 
 .bg-dark { background-color: #0a0a0a; }
 .blue    { background-color: #12808D; } .blue:hover   { background-color: #094249; }
-.red   { background-color: #F04B22; } .red:hover    { background-color: #b92f0d; }
+.red     { background-color: #F04B22; } .red:hover    { background-color: #b92f0d; }
 .yellow  { background-color: #F89F1C; } .yellow:hover { background-color: #c27606; }
 .green   { background-color: #6C8D3B; } .green:hover  { background-color: #435724; }
 
 a.nav-link.underline-on-hover:hover { text-decoration: underline; }
 a.no-underline-on-hover:hover { text-decoration: none !important; }
+
+.code { 
+  font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  color: #f04c23;
+  padding: 4px;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 5px;
+}

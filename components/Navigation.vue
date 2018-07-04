@@ -8,10 +8,12 @@
         li.nav-item
           a.m-2(href="/lineup")
             span.footer-link-text Lineup
+        //li.nav-item
+          a.m-2(href="/badges")
+            span.footer-link.text Get Badges
 
     span.navbar-text.pull-right
       a.nav-link.underline-on-hover(href="#" data-toggle="modal" data-target="#contact-modal")
-        span.fa.fa-envelope.fa-lg
         contact-modal.footer-link-text
 
 </template>

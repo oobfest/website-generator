@@ -1,5 +1,6 @@
 <template lang="pug">
 div
+  font-awesome-icon(icon="envelope")
   b-button.footer-link-text(@click="showModal" variant="link") Contact
   b-modal(title="Contact" ref="contactModal")
     .form-group
@@ -63,3 +64,9 @@ div
     }
   }
 </script>
+
+<style scoped>
+  .btn-link {
+    font-size: 21px;
+  }
+</style>

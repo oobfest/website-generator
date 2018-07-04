@@ -50,12 +50,12 @@ div
   transition: all 1s;
   display: inline-block;
 }
+
 .act-enter, .act-leave-to {
   opacity: 0;
 }
 .act-leave-active {
-  position: absolute;
-  z-index: 0;
+  display: none;
 }
 
 </style>
