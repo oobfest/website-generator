@@ -270,7 +270,7 @@ div.text-center
                 name: self.performerBadge.name,
                 email: self.performerBadge.email,
                 phone: self.performerBadge.phone,
-                quantity: paymentData.transactions[0].item_list.items[0].quantity
+                weekendOnly: self.performerBadge.weekendOnly
               }
               return actions.request
                 .post('http://app.oobfest.com/api/paypal/execute-performer-badge-sale', requestData)
