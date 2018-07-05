@@ -53,7 +53,7 @@ div.text-center
                 p Thank you for your purchase! 
                 p An email has been sent to 
                   span.code {{badge.email}}
-  //.row.justify-content-md-center
+  .row.justify-content-md-center
     .col-md-10
       .card-deck.mt-5
         .card.bg-blue.mb-5
@@ -107,8 +107,8 @@ div.text-center
                       .form-group
                         #paypal-button-2
                     .col.text-left
-                      button.btn.btn-secondary(type="button" @click="cardState--") Cancel
-              .col.align-self-center(v-show="cardState==4")
+                      button.btn.btn-secondary(type="button" @click="state-=2") Cancel
+              .col.align-self-center(v-show="state==4")
                 p Thank you for your purchase! 
                 p An email has been sent to 
                   span.code {{performerBadge.email}}
