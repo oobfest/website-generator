@@ -53,7 +53,7 @@ div.text-center
                 p Thank you for your purchase! 
                 p An email has been sent to 
                   span.code {{badge.email}}
-  //.row.justify-content-md-center
+  .row.justify-content-md-center
     .col-md-10
       .card-deck.mt-5
         .card.bg-blue.mb-5
@@ -235,7 +235,7 @@ div.text-center
       }, '#paypal-button')
 
       paypal.Button.render({
-        env: 'sandbox',
+        env: 'production',
         style: {
           layout: 'vertical',
           size:   'medium',
