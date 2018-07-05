@@ -235,7 +235,7 @@ div.text-center
       }, '#paypal-button')
 
       paypal.Button.render({
-        env: 'sandbox',
+        env: 'production',
         style: {
           layout: 'vertical',
           size:   'medium',
