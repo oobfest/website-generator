@@ -6,9 +6,9 @@
           img.mx-auto.d-block(src="~/assets/images/logo.png" style="max-width:100%" alt="Out of Bounds Comedy Festival")
         h3 Labor Day Weekend, August 28th to September 3rd in Austin, Texas
         h2 
-          a(href="/lineup") Lineup announced!
+          a(href="/acts") Lineup announced!
         h5
-          a(href="/lineup") View Lineup
+          a(href="/acts") View Lineup
         p.mt-4
           a(href="#learn-more") Learn More about OoB
     .row.justify-content-center.dark-background.mt-3.pb-4(id="learn-more")
