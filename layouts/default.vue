@@ -17,7 +17,7 @@
 
 <style scoped>
   .background-graphic {
-    background: url('/assets/images/marcella-arguello-cropped-dark.jpeg') no-repeat bottom center fixed; 
+    background: url('/assets/images/marcella-arguello-cropped-dark-min.jpeg') no-repeat bottom center fixed; 
     background-size: cover;
   }
 </style>

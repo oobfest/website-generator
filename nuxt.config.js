@@ -1,36 +1,44 @@
 const pkg = require('./package')
 
-const axios = require('axios')
+let axios = require('axios')
+let limax = require('limax')
+
+function getActs() {
+  return axios.get('http://app.oobfest.com/api/submissions/get-valid-acts')
+}
+
+function getWorkshops() {
+  return axios.get('http://app.oobfest.com/api/workshops/public/')
+}
+
 
 module.exports = {
   mode: 'universal',
 
   generate: {
-    routes() {
-      return axios.get('http://app.oobfest.com/api/submissions/get-valid-acts')
-      .then((response) => {
-        return response.data.map((act) => {
-          return {
-            route: '/act/' + act.domain,
-            payload: act
+    routes(callback) {
+      axios
+        .all([getActs(), getWorkshops()])
+        .then(axios.spread((actsResponse, workshopsResponse)=> {
+          let acts = actsResponse.data
+          let workshops = workshopsResponse.data
+          let routes = []
+
+          routes.push({ route: '/acts/', payload: acts })
+          routes.push({ route: '/workshops/', payload: workshops })
+          
+          for(let act of acts) {
+            routes.push({route: '/acts/' + act.domain, payload: act})
           }
-        })
-      })
+
+          for(let workshop of workshops) {
+            routes.push({route: '/workshops/' + limax(workshop.name), payload: workshop})
+          }
+          
+          callback(null, routes)
+        }))
     }
   },
-
-  /* FANCY GENERATE!
-  generate: {
-    routes() {
-      return axios.all([
-        axios.get('http://app.oobfest.com/api/submissions/get-valid-acts'),
-        axios.get('http://app.oobfest.com/api/shows/')
-      ])
-      .then(axios.spread((acts, shows)=> {
-
-      }))
-    }
-  }*/
 
   /*
   ** Headers of the page

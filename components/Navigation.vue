@@ -6,11 +6,14 @@
           a.m-2(href="/")
             span.footer-link-text Home
         li.nav-item
-          a.m-2(href="/lineup")
+          a.m-2(href="/acts")
             span.footer-link-text Lineup
         li.nav-item
           a.m-2(href="/badges")
             span.footer-link.text Get Badges
+        //li.nav-item
+          a.m-2(href="/workshops")
+            span.footer-link.text Workshops
 
     span.navbar-text.pull-right
       a.nav-link.underline-on-hover(href="#" data-toggle="modal" data-target="#contact-modal")
