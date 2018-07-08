@@ -1,5 +1,5 @@
 <template lang="pug">
-  a(:href="'/act/' + domain")
+  a(:href="'/acts/' + domain")
     .act(:style="thumbnailUrl")
       .banner
         span.name(:style="fontSize") {{actName}}      

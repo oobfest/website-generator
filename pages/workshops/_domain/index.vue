@@ -3,6 +3,7 @@ div
   .row
     .col  
       h2 {{name}}
+      h3 by {{teacher}}
       vue-markdown {{description}}
     .col
       img(:src="thumbnailUrl")
@@ -14,7 +15,7 @@ div
     components: {VueMarkdown},
     computed: {
       thumbnailUrl() {
-        return this.imageUrl.substr(0, this.imageUrl.length-4) + 'l.jpeg)'
+        return this.imageUrl.substr(0, this.imageUrl.length-4) + 'l.jpeg'
       }
     },
     async asyncData ({ params, error, payload }) {
