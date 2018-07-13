@@ -11,7 +11,7 @@
         li.nav-item
           a.m-2(href="/badges")
             span.footer-link.text Get Badges
-        li.nav-item
+        //li.nav-item
           a.m-2(href="/workshops")
             span.footer-link.text Workshops
 
