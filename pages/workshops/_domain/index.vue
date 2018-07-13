@@ -136,7 +136,6 @@ div
           if(!self.isValid()) alert('Please fill in all fields')
         },
         payment: function(data, actions) {
-          let self = this
           return actions.request
             .post('http://app.oobfest.com/api/paypal/create-workshop-sale', {name: self.workshop.name, quantity: self.ticket.quantity})
             .then(function(response) {
