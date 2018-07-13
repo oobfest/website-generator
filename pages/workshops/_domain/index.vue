@@ -61,7 +61,6 @@ div
       return {
         state: 0,
         ticket: {
-          workshopName: '',
           name: '',
           email: '',
           phone: '',
@@ -116,7 +115,6 @@ div
     },
     mounted() {
       let self = this
-      self.ticket.workshopName = self.name
       paypal.Button.render({
         env: 'production',
         commit: true,
@@ -138,10 +136,11 @@ div
           if(!self.isValid()) alert('Please fill in all fields')
         },
         payment: function(data, actions) {
+          let self = this
           return actions.request
-            .post('http://app.oobfest.com/api/paypal/create-workshop-sale', self.ticket)
+            .post('http://app.oobfest.com/api/paypal/create-workshop-sale', {name: self.workshop.name, quantity: self.ticket.quantity})
             .then(function(response) {
-              return response.id;
+              return response.id
             })
         },
         onAuthorize: function(data, actions) {
@@ -150,8 +149,8 @@ div
             .then(function(paymentData) {
               let requestData = {
                 paymentId: data.paymentID,
-                payerId: data.payerID,                
-                domain: self.domain,
+                payerId: data.payerID,
+                domain: self.workshop.domain,
                 name: self.ticket.name,
                 email: self.ticket.email,
                 phone: self.ticket.phone,
