@@ -1,16 +1,17 @@
 <template lang="pug">
   .row
     .col
-      table.table.table-dark.table-striped
-        tbody
-          tr(v-for="workshop in workshops")
-            td.middle
-              img(:src="workshop.imageUrl + 'm.jpg'")
-            td
-              h2 {{workshop.name}} 
-              h3 by {{workshop.teacher}}
-              p {{workshop.description}} 
-              a.btn.btn-primary.btn-lg(:href="'/' + workshop.domain") See More
+      .table-responsive
+        table.table.table-dark.table-striped
+          tbody
+            tr(v-for="workshop in workshops")
+              td
+                h2 {{workshop.name}} 
+                h3 by {{workshop.teacher}}
+                p {{workshop.description}} 
+                a.btn.btn-primary.btn-lg(:href="'/' + workshop.domain") See More
+              td.middle
+                img(:src="workshop.imageUrl + 'm.jpg'")
           
 </template>
 
