@@ -9,7 +9,7 @@
                 h2 {{workshop.name}} 
                 h3 by {{workshop.teacher}}
                 p {{workshop.description}} 
-                a.btn.btn-primary.btn-lg(:href="'/' + workshop.domain") See More
+                a.btn.btn-primary.btn-lg(:href="'/workshops/' + workshop.domain") See More
               td.middle
                 img(:src="workshop.imageUrl + 'm.jpg'")
           

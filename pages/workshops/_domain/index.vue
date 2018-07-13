@@ -9,7 +9,7 @@ div
         span(v-if="workshop.affiliation")  from 
           span.font-italic {{workshop.affiliation}}
         .text-center
-          img.m-2(:src="thumbnailUrl")
+          img.m-2.img-fluid(:src="thumbnailUrl")
       section(v-show="state==0")
         h3 Workshop Details
         vue-markdown {{workshop.description}}
