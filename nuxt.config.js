@@ -3,6 +3,8 @@ const pkg = require('./package')
 let axios = require('axios')
 let limax = require('limax')
 
+let isDev = process.env.npm_lifecycle_event == 'dev'
+
 function getActs() {
   return axios.get('http://app.oobfest.com/api/submissions/get-valid-acts')
 }
@@ -10,6 +12,7 @@ function getActs() {
 function getWorkshops() {
   return axios.get('http://app.oobfest.com/api/workshops/public/')
 }
+
 
 
 module.exports = {
@@ -70,10 +73,9 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-      { src: '@/plugins/google-analytics'}
-  ],
-
+  plugins: isDev 
+    ? []
+    : [{ src: '@/plugins/google-analytics'}],
   /*
   ** Nuxt.js modules
   */

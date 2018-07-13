@@ -1,30 +1,78 @@
 <template lang="pug">
 div
-  .row
-    .col
-      img.float-right(:src="thumbnailUrl")
-    .col  
-      h2 {{name}}
+  script(src="https://www.paypalobjects.com/api/checkout.js")
+  .row.justify-content-center
+    .col-md-8.workshop
+      h2 {{workshop.name}}
       p By 
-        span.font-italic {{teacher}}
-        span(v-if="affiliation")  from 
-          span.font-italic {{affiliation}}
-      h3 Workshop Details
-      vue-markdown {{description}}
-      h3 Teacher Bio
-      vue-markdown {{bio}}
-      h3 Event Details
-      p {{day}}, {{getTime(time)}} at {{venue}}.
+        span.font-italic {{workshop.teacher}}
+        span(v-if="workshop.affiliation")  from 
+          span.font-italic {{workshop.affiliation}}
+        .text-center
+          img.m-2(:src="thumbnailUrl")
+      section(v-show="state==0")
+        h3 Workshop Details
+        vue-markdown {{workshop.description}}
+        h3 Teacher Bio
+        vue-markdown {{workshop.bio}}
+        h3 Event Details
+        p {{workshop.day}}, {{getTime(workshop.time)}} at {{getVenue(workshop.venue)}}
+        .text-center
+          .form-group(v-if="workshop.remaining > 0")
+            button.btn.btn-primary.btn-lg(@click="state++" type="button") Get Reservation - $45*
+            p.mt-3 * Special "early bird" price until August 1st
+          div(v-else).text-center
+            p.sold-out This workshop has sold out!
+      section(v-show="state==1")
+        .form-group
+          label(for="name") Name 
+            small (include everyone attending)
+          input#name.form-control(type="text" v-model="ticket.name")
+        .form-group
+          label(for="email") Email
+          input#email.form-control(type="email" v-model="ticket.email")
+        .form-group
+          label(for="phone") Phone Number
+          input#phone.form-control(type="tel" v-model="ticket.phone")
+        .form-group
+          label(for="quantity") Quantity
+          select#quantity.custom-select(name="quantity" v-model="ticket.quantity")
+            option(v-for="n in workshop.remaining") {{n}}
+        .row
+          .col.text-right
+            .form-group
+              #paypal-button
+          .col.text-left
+            .form-group
+              button.btn.btn-secondary(type="button" @click="state--") Cancel
+      section(v-show="state==2")
+        p Thank you for your purchase!
+        p An email has been sent to 
+          span.code {{ticket.email}}
 
 </template>
 
 <script>
   import VueMarkdown from 'vue-markdown'
+  import axios from 'axios'
+
   export default {
+    data() {
+      return {
+        state: 0,
+        ticket: {
+          workshopName: '',
+          name: '',
+          email: '',
+          phone: '',
+          quantity: 1
+        }
+      }
+    },
     components: {VueMarkdown},
     computed: {
       thumbnailUrl() {
-        return this.imageUrl + 'l.jpeg'
+        return this.workshop.imageUrl + 'l.jpeg'
       }
     },
     methods: {
@@ -33,29 +81,106 @@ div
         if(time=="20") return "12:00pm"
         if(time=="30") return "1:00pm"
         if(time=="40") return "3:00pm"
+      },
+      getVenue(venue) {
+        if(venue=="Hideout Down") return "the Hideout Theatre"
+        if(venue=="Hideout Up") return "the Hideout Theatre"
+        if(venue=="Hideout Classroom") return "the Hideout Theatre"
+        else return venue
+      },
+      isValid() {
+        return this.ticket.name != '' &&
+          this.ticket.email != '' &&
+          this.ticket.phone != ''
+      },
+      validate(actions) {
+        this.isValid() ? actions.enable() : actions.disable()
+      },
+      onChange(handler) {
+        document.querySelector('#name').addEventListener('change', handler)
+        document.querySelector('#email').addEventListener('change', handler)
+        document.querySelector('#phone').addEventListener('change', handler)
       }
     },
-    async asyncData ({ params, error, payload }) {
-      if(payload) return payload
-      else return {
-        name: "Not Found",
-        description: "Really **fancy** stuff",
-        teacher: "Dr. Improv",
-        affiliation: "Cleveland, OH",
-        bio: "This person keeps an air of mystery about them.",
-        imageUrl: 'https://i.imgur.com/Yiuleg5',
-        day: "Gluesday",
-        venue: "Hideout Mystery Room",
-        time: "20"
-      }
+    async asyncData({params, error, payload}) {
+      // Always get via API, in case workshop sells out
+      return axios
+        .get('http://app.oobfest.com/api/workshops/get-by-domain/' + params.domain)
+        .then((response)=> {
+          return {workshop: response.data}
+        })
+        .catch((error)=> {
+          alert("Error loading workshop")
+          console.log(error)
+        })
+    },
+    mounted() {
+      let self = this
+      self.ticket.workshopName = self.name
+      paypal.Button.render({
+        env: 'sandbox',
+        commit: true,
+        style: {
+          layout: 'vertical',
+          size:   'medium',
+          shape:  'rect',
+          color:  'gold' 
+        },
+        funding: {
+          allowed: [ paypal.FUNDING.CARD ],
+          disallowed: [ paypal.FUNDING.CREDIT ]
+        },
+        validate: function(actions) {
+          self.validate(actions)
+          self.onChange(function() { self.validate(actions) })
+        },
+        onClick: function() {
+          if(!self.isValid()) alert('Please fill in all fields')
+        },
+        payment: function(data, actions) {
+          return actions.request
+            .post('http://app.oobfest.com/api/paypal/create-workshop-sale', self.ticket)
+            .then(function(response) {
+              return response.id;
+            })
+        },
+        onAuthorize: function(data, actions) {
+          return actions.payment
+            .get()
+            .then(function(paymentData) {
+              let requestData = {
+                paymentId: data.paymentID,
+                payerId: data.payerID,                
+                domain: self.domain,
+                name: self.ticket.name,
+                email: self.ticket.email,
+                phone: self.ticket.phone,
+                quantity: paymentData.transactions[0].item_list.items[0].quantity
+              }
+              return actions.request
+                .post('http://app.oobfest.com/api/paypal/execute-workshop-sale', requestData)
+                .then(function(response) {
+                  self.state++
+                })
+            })
+        }
+      }, '#paypal-button')
+
     }
   }
 </script>
 
 <style>
-  h3 {
-    color: #eb4d30;
-    text-transform: uppercase;
-    font-weight: bold;
+  .workshop {
+    border: 2px solid grey;
+    margin: 1rem;
+    padding: 1rem;
+    background-color: rgba(0,0,0,0.75);
+    box-shadow: 3px 3px 5px black;
   }
+  .sold-out {
+    padding: 0.5em;
+    background-color: #15808c;
+  }
+
 </style>

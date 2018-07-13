@@ -16,19 +16,19 @@ div(style="padding-bottom:3em")
           li(v-for="socialMediaLink in socialMedia")
             a(:href="socialMediaLink.url" target="_blank") {{socialMediaLink.type}}
       p.text-right
-        a(href="/lineup") Back to Lineup
+        a(href="/acts") Back to Lineup
 </template>
 
 <script>
 import axios from 'axios'
 export default {
-  data() {
-    return {
-      act: {}
-    }
-  },
   async asyncData ({ params, error, payload }) {
-    return payload
+    if(payload) return payload
+    else return axios
+      .get('http://app.oobfest.com/api/submissions/get-act/' + params.domain)
+      .then((response)=> {
+        return response.data
+      })
   },
   computed: {
     performers() {

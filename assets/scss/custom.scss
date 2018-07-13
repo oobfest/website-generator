@@ -5,7 +5,7 @@ body {
   color: white;
   font-family: 'gotham-book', sans-serif;
   background-color: #0a0a0a;
-  text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+  text-shadow: 3px 3px 3px rgba(0,0,0,0.2);
   font-size: 21px;
 }
 
@@ -23,6 +23,13 @@ h1 {
 h2 {
   font-variant: small-caps;
 }
+
+h3 {
+  color: #eb4d30;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
 
 a, .btn-link             { color: white; text-shadow: 2px 2px 0px rgba(0,0,0,0.2); }
 a:hover, .btn-link:hover { color: white; }
@@ -63,4 +70,21 @@ a.no-underline-on-hover:hover { text-decoration: none !important; }
   padding: 4px;
   background-color: rgba(0,0,0,0.5);
   border-radius: 5px;
+}
+
+.btn-lg {
+  font-size: 1.5rem;
+}
+
+.btn-primary {
+  background-color: #15808c;
+  border-color: #0a3f46;
+  &:hover {
+    background-color: #0f5f69;
+    border-color: #041f23;
+  }
+  &:not(:disabled):not(.disabled):active {
+    background-color: #0a3f46;
+    border-color: #041f23; 
+  }
 }

@@ -72,13 +72,14 @@ div.text-center
                     span 45
                     span.tiny weekend-only
                 ul
-                  li For people performing in the festival
-                  li Upgrade your Performer pass to an All-Access pass. 
+                  li Upgrade your Performer badge to an All-Access badge
+                  li For festival performers who want to reserve tickets
                   li Use the email included in your act's submission to verify
                   li Purchase a special “Weekend Upgrade” for Fri – Mon only
-                button.btn.btn-primary.btn-lg(type="button" @click="performerBadge.weekendOnly=true; state++") Weekend Upgrade
-                | &nbsp;
-                button.btn.btn-primary.btn-lg(type="button" @click="performerBadge.weekendOnly=false; state++") Full Week Upgrade
+                .form-group
+                  button.btn.btn-primary.btn-lg(type="button" @click="performerBadge.weekendOnly=true; state++") Weekend Upgrade
+                .form-group
+                  button.btn.btn-primary.btn-lg(type="button" @click="performerBadge.weekendOnly=false; state++") Full Week Upgrade
               .col.align-self-center(v-show="state==1")
                 .max-width
                   .form-group
