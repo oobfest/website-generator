@@ -118,7 +118,7 @@ div
       let self = this
       self.ticket.workshopName = self.name
       paypal.Button.render({
-        env: 'sandbox',
+        env: 'production',
         commit: true,
         style: {
           layout: 'vertical',
