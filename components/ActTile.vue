@@ -1,7 +1,7 @@
 <template lang="pug">
   a(:href="'/acts/' + domain")
     .act(:style="thumbnailUrl")
-      .banner
+      .banner(:class="{'headliner': headliner}")
         span.name(:style="fontSize") {{actName}}      
 
 </template>
@@ -9,7 +9,7 @@
 <script>
 
   export default {
-    props: ['actName', 'imageUrl', 'domain'],
+    props: ['actName', 'imageUrl', 'domain', 'headliner'],
     computed: {
       thumbnailUrl() {
         return "background-image: url(" + this.imageUrl.substr(0, this.imageUrl.length-4) + 'l.jpeg)'
@@ -72,6 +72,10 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.banner.headliner {
+  background-color: rgba(240, 76, 35, 0.75)
 }
 
 .name {

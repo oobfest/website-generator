@@ -20,8 +20,13 @@
       return axios
         .get('http://app.oobfest.com/api/submissions/get-valid-acts')
         .then((response)=> {
-          let acts = response.data.sort((a, b)=> {return (a.actName < b.actName) ? -1 : (a.actName > b.actName) ? 1 : 0})
-          return { acts }
+          let featuredActs = response.data
+            .filter(a=> a.headliner)
+            .sort((a, b)=> {return (a.actName < b.actName) ? -1 : (a.actName > b.actName) ? 1 : 0})
+          let nonFeaturedActs = response.data
+            .filter(a=>!a.headliner)
+            .sort((a, b)=> {return (a.actName < b.actName) ? -1 : (a.actName > b.actName) ? 1 : 0})
+          return { acts : featuredActs.concat(nonFeaturedActs) }
         })
     }
   }
