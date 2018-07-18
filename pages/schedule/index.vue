@@ -9,10 +9,15 @@
             li.venue(v-for="venue in day.venues") 
               h3 {{formatVenue(venue)}}
               ul.list-unstyled
-                li.showy(v-for="show in getShowsByDayAndVenue(day.name, venue)" v-b-modal.show-modal @click="getModal(show)")
+                li.showy.text-center(v-for="show in getShowsByDayAndVenue(day.name, venue)" v-b-modal.show-modal @click="getModal(show)")
                   span.time {{formatTime(show.time)}}
                   ul.list-unstyled
-                    li.act(v-for="act in show.acts") {{act.name}}
+                    li.media(v-for="act in show.acts") 
+                      img(:src="act.imageUrl + 's.jpg'" v-if="act.imageUrl")
+                      .media-body.align-self-center
+                        .act-name {{act.name}}
+                  .text-center(v-if="show.remaining <= 0")
+                    span.sold-out Sold out!
 
 </template>
 
@@ -108,6 +113,12 @@ export default {
     text-align: center;
   }
 
+  .sold-out {
+    font-variant: small-caps;
+    font-weight: bold;
+    color: #eb4d30;
+  }
+
   .schedule {
   }
 
@@ -125,7 +136,7 @@ export default {
     background-color: rgba(20, 128, 140, .75);
     padding: 0.5rem;
     border-radius: 5px;
-    margin: 1rem 0;
+    margin: 1.5rem 0;
   }
   .showy:hover {
     background-color: rgba(20,128,140,1);
@@ -136,11 +147,16 @@ export default {
     color: #f9a01b;
   }
 
-  .act {
-    font-size: 1rem;
+  .act-name {
+    font-size: 17px;
+    margin-left: 1rem;
+  }
+
+  .media + .media {
+    margin-top: 1rem;
   }
   .act + .act {
-    border-top: 1px solid rgba(255,255,255,0.5);
+    /*border-top: 1px solid rgba(255,255,255,0.5);*/
   }
 
 </style>

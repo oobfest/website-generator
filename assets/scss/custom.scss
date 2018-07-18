@@ -88,3 +88,8 @@ a.no-underline-on-hover:hover { text-decoration: none !important; }
     border-color: #041f23; 
   }
 }
+
+.btn-primary.disabled, .btn-primary:disabled {
+  background-color: #0f5f69;
+  border-color: #041f23;
+}
