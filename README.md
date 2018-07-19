@@ -1,0 +1,1 @@
+This site is generated with [Nuxt](https://nuxtjs.org)
