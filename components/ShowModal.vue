@@ -1,26 +1,28 @@
 <template lang="pug">
 
-  b-modal#show-modal(ref="showModal" @hidden="reset" size="lg" hide-footer=true)
+  b-modal#show-modal(:size="modalSize" ref="showModal" @hidden="reset" hide-footer=true)
     template(slot="modal-header") 
       span {{show.day}}, {{formatVenue(show.venue)}} at {{formatTime(show.time)}}
       button.close(type="button" @click="$refs.showModal.hide()") &times;
 
-    ul.list-unstyled
-      li.media(v-for="act in show.acts")
-        img.mr-3.align-self-center(:src="act.imageUrl + 'b.jpg'" v-if="act.imageUrl")
-        .media-body.align-self-center
-          h2.modal-act-name {{act.name}}
-          p.modal-act-description {{act.description}}
-
-    div.text-right(v-if="show.remaining<=0")
-      strong.text-danger This show is sold out!
-    div.mt-2(v-else)
-      section.text-right(v-show="state==0")
-        button.btn.btn-secondary.btn-lg(type="button" @click="$refs.showModal.hide()") Cancel
-        | &nbsp;
-        button.btn.btn-primary.btn-lg(type="button" @click="" style="text-decoration: line-through" disabled v-b-tooltip title="Individual ticket sales coming soon") Buy Tickets
-        | &nbsp;
-        button.btn.btn-primary.btn-lg(type="button" @click="state++") Reserve with Badge
+    div.mt-2
+      section(v-show="state==0")
+        ul.list-unstyled
+          li.media(v-for="act in show.acts")
+            img.mr-3.align-self-center(:src="act.imageUrl + 'b.jpg'" v-if="act.imageUrl")
+            .media-body.align-self-center
+              h2.modal-act-name {{act.name}} 
+                small &mdash; {{formatActType(act.type)}}
+              p.modal-act-description {{act.description}}
+        div(v-if="show.remaining<=0")
+            strong.text-danger This show is sold out!
+        div(v-else)
+          .text-right
+            button.btn.btn-secondary(type="button" @click="$refs.showModal.hide()") Cancel
+            | &nbsp;
+            button.btn.btn-primary(type="button" @click="" style="text-decoration: line-through" v-b-tooltip.hover title="Individual ticket sales coming soon!") Buy Tickets
+            | &nbsp;
+            button.btn.btn-primary(type="button" @click="state++") Reserve with Badge
       section(v-show="state==1")
         .form-group
           label Badge Email
@@ -31,26 +33,39 @@
             option 1
             option 2
             option 3
-        .form-group
-          button.btn.btn-secondary.btn-lg(type="button" @click="state--") Cancel
+        .text-right
+          button.btn.btn-secondary(type="button" @click="state--") Back
           | &nbsp;
-          button.btn.btn-primary.btn-lg(type="button" @click="reserveWithBadge(show._id)") Make Reservation
+          button.btn.btn-primary(type="button" @click="reserveWithBadge(show._id)") Make Reservation
       section(v-show="state==2")
         p Success!
         button.btn.btn-primary(type="button" @click="$refs.showModal.hide()") Close
+      section(v-show="state==3")
+        paypal(:show-id="show._id")
+        .text-right
+          button.btn.btn-secondary(type="button" @click="state=0") Back
 
 </template>
 
 <script>
   import axios from 'axios'
+  import PayPal from '@/components/PayPal'
 
   export default {
+    components: {paypal: PayPal},
     props: ['show', 'acts'],
     data() {
       return {
         state: 0,
         email: "",
-        quantity: 1
+        quantity: 1,
+      }
+    },
+    computed: {
+      modalSize() {
+        return this.state == 0 
+          ? 'lg' 
+          : 'md'
       }
     },
     methods: {
@@ -94,6 +109,11 @@
         time = String(time)
         return time.slice(0, time.length-2) + ":" + time.slice(time.length-2) + "pm"
       },
+      formatActType(type) {
+        return type == 'Individual' 
+          ? 'Sketch'
+          : type
+      }
     }
   }
 
