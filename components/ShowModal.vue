@@ -39,7 +39,10 @@
           button.btn.btn-primary(type="button" @click="reserveWithBadge(show._id)") Make Reservation
       section(v-show="state==2")
         p Success!
-        button.btn.btn-primary(type="button" @click="$refs.showModal.hide()") Close
+        p A confirmation email has been sent to 
+          span.code {{email}}
+        .text-right
+          button.btn.btn-primary(type="button" @click="$refs.showModal.hide()") Close
       section(v-show="state==3")
         paypal(:show-id="show._id")
         .text-right
