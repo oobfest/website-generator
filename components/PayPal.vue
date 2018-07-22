@@ -13,9 +13,7 @@
   .form-group
     label(for="quantity") Quantity
     select#paypal-quantity.custom-select(name="quantity" v-model="ticket.quantity")
-      option 1
-      option 2
-      option 3
+      option(v-for="n in remaining") {{n}}
   .row
     .col-3
     .col-6
@@ -27,13 +25,13 @@
   import axios from 'axios'
   
   export default {
-    props: ['showId'],
+    props: ['showId', 'remaining'],
     data() {
       return {
         ticket: {
-          name: '',
-          email: '',
-          phone: '',
+          name: 'demo',
+          email: 'demo@demo',
+          phone: '543',
           quantity: 1
         }
       }
@@ -61,7 +59,7 @@
       paypal.Button.render({
 
         // Properties
-        env: 'sandbox',       // Remember to switch me back to 'production'!
+        env: 'production',
         commit: true,
         style: {layout: 'vertical', size: 'medium', shape: 'rect', color: 'gold'},
         funding: {allowed: [paypal.FUNDING.CARD], disallowed: [paypal.FUNDING.CREDIT]},
@@ -77,9 +75,13 @@
         },
         payment: function(data, actions) {
           return axios
-            .post('http://test.oobfest.com/api/paypal/create-ticket/' + self.showId, self.ticket)
+            .post('http://app.oobfest.com/api/paypal/create-ticket-sale/' + self.showId, self.ticket)
             .then(function(response) {
-              return response.id
+              return response.data.id
+            })
+            .catch(function(error) {
+              alert("Payment creation failed, show may have sold out!")
+              console.log(error)
             })
         },
         onAuthorize: function(data, actions) {
@@ -89,14 +91,21 @@
               let requestData = {
                 paymentId: data.paymentID,
                 payerId: data.payerID,
-                // Whatever other fields I'll need
+                ticket: self.ticket
               }
               return axios
-                .post('http://test.oobfest.com/api/paypal/execute-ticket', requestData)
+                .post('http://app.oobfest.com/api/paypal/execute-ticket-sale/' + self.showId, requestData)
                 .then(function(response) {
-                  // Do whatever when it's successful
+                  self.$parent.state = 2
+                })
+                .catch(function(error) {
+                  alert("Payment execution failed")
+                  console.log(error)
                 })
             })
+        },
+        onError: function(error) {
+          console.log("Error")
         }
       }, '#paypal-button')
      }

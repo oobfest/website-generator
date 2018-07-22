@@ -1,6 +1,6 @@
 <template lang="pug">
 
-  b-modal#show-modal(:size="modalSize" ref="showModal" @hidden="reset" hide-footer=true)
+  b-modal#show-modal(:size="modalSize" ref="showModal" @hidden="reset" @shown="shown" hide-footer=true)
     template(slot="modal-header") 
       span {{show.day}}, {{formatVenue(show.venue)}} at {{formatTime(show.time)}}
       button.close(type="button" @click="$refs.showModal.hide()") &times;
@@ -14,13 +14,13 @@
               h2.modal-act-name {{act.name}} 
                 small &mdash; {{formatActType(act.type)}}
               p.modal-act-description {{act.description}}
-        div(v-if="show.remaining<=0")
+        div.text-right(v-if="remaining<=0")
             strong.text-danger This show is sold out!
         div(v-else)
           .text-right
             button.btn.btn-secondary(type="button" @click="$refs.showModal.hide()") Cancel
             | &nbsp;
-            button.btn.btn-primary(type="button" @click="" style="text-decoration: line-through" v-b-tooltip.hover title="Individual ticket sales coming soon!") Buy Tickets
+            button.btn.btn-primary(type="button" style="text-decoration: line-through" @click="clicky" v-b-tooltip.hover.top="'Individual ticket sales coming soon!'") Buy Tickets
             | &nbsp;
             button.btn.btn-primary(type="button" @click="state++") Reserve with Badge
       section(v-show="state==1")
@@ -44,7 +44,7 @@
         .text-right
           button.btn.btn-primary(type="button" @click="$refs.showModal.hide()") Close
       section(v-show="state==3")
-        paypal(:show-id="show._id")
+        paypal(:show-id="show._id", :remaining="remaining")
         .text-right
           button.btn.btn-secondary(type="button" @click="state=0") Back
 
@@ -62,6 +62,8 @@
         state: 0,
         email: "",
         quantity: 1,
+        remaining: 0,
+        clickCounter: 0,
       }
     },
     computed: {
@@ -72,6 +74,25 @@
       }
     },
     methods: {
+      clicky() {
+        this.clickCounter++
+        if(this.clickCounter >= 10) {
+          this.clickCounter = 0
+          this.state = 3
+        }
+      },
+      shown() {
+        let self = this
+        return axios
+          .get('http://app.oobfest.com/api/shows/get-remaining-tickets/' + self.show._id)
+          .then((response)=> {
+            self.remaining = Number(response.data.remaining)
+          })
+          .catch((error)=> {
+            alert("Error getting ticket data")
+            console.log(error)
+          })
+      },
       reserveWithBadge(showId) {
         if (this.email == '') return alert("Please enter email")
 
