@@ -9,7 +9,7 @@
             li.venue(v-for="venue in day.venues") 
               h3 {{formatVenue(venue)}}
               ul.list-unstyled
-                li.showy.text-center(v-for="show in getShowsByDayAndVenue(day.name, venue)" v-b-modal.show-modal @click="getModal(show)")
+                li.showy.text-center(v-for="show in getShowsByDayAndVenue(day.name, venue)" v-b-modal.show-modal @click="modalModel = show")
                   span.time {{formatTime(show.time)}}
                   ul.list-unstyled
                     li.media(v-for="act in show.acts") 
@@ -24,7 +24,6 @@
 <script>
 import axios from 'axios'
 import ShowModal from '@/components/ShowModal'
-
 export default {
   components: {ShowModal},
   async asyncData ({ params, error, payload }) {
@@ -52,9 +51,6 @@ export default {
     }
   },
   methods: {
-    getModal(show) {
-      this.modalModel = show
-    },
     getShowsByDayAndVenue(day, venue) {
       return this.shows.filter(s=> s.day == day && s.venue == venue)
     },

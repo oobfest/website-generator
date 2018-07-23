@@ -13,6 +13,9 @@ function getWorkshops() {
   return axios.get('http://app.oobfest.com/api/workshops/public/')
 }
 
+function getShows() {
+  return axios.get('http://app.oobfest.com/api/shows/public/')
+}
 
 
 module.exports = {
@@ -21,16 +24,24 @@ module.exports = {
   generate: {
     routes(callback) {
       axios
-        .all([getActs(), getWorkshops()])
-        .then(axios.spread((actsResponse, workshopsResponse)=> {
+        .all([getActs(), getWorkshops(), getShows()])
+        .then(axios.spread((actsResponse, workshopsResponse, showsResponse)=> {
           let acts = actsResponse.data
           let workshops = workshopsResponse.data
+          let allShows = showsResponse.data
           let routes = []
 
           routes.push({ route: '/acts/', payload: acts })
           routes.push({ route: '/workshops/', payload: workshops })
           
           for(let act of acts) {
+
+            let showsTheActIsIn = []
+            for(let show of allShows)
+              for(let showAct of show.acts)
+                if (showAct._id == act._id) showsTheActIsIn.push(show)
+
+            act.shows = showsTheActIsIn
             routes.push({route: '/acts/' + act.domain, payload: act})
           }
 

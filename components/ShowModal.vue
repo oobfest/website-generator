@@ -20,7 +20,7 @@
           .text-right
             button.btn.btn-secondary(type="button" @click="$refs.showModal.hide()") Cancel
             | &nbsp;
-            button.btn.btn-primary(type="button" style="text-decoration: line-through" @click="clicky" v-b-tooltip.hover.top="'Individual ticket sales coming soon!'") Buy Tickets
+            button.btn.btn-primary(type="button" @click="state=3") Buy Tickets
             | &nbsp;
             button.btn.btn-primary(type="button" @click="state++") Reserve with Badge
       section(v-show="state==1")
@@ -38,13 +38,14 @@
           | &nbsp;
           button.btn.btn-primary(type="button" @click="reserveWithBadge(show._id)") Make Reservation
       section(v-show="state==2")
-        p Success!
-        p A confirmation email has been sent to 
-          span.code {{email}}
+        .text-center
+          h2 Success!
+          p A confirmation email has been sent to &nbsp;
+            span.code {{email}}
         .text-right
           button.btn.btn-primary(type="button" @click="$refs.showModal.hide()") Close
       section(v-show="state==3")
-        paypal(:show-id="show._id", :remaining="remaining")
+        paypal(:show-id="show._id", :remaining="remaining" @paid="paid")
         .text-right
           button.btn.btn-secondary(type="button" @click="state=0") Back
 
@@ -68,18 +69,15 @@
     },
     computed: {
       modalSize() {
-        return this.state == 0 
+        return this.state == 0 || this.state == 2
           ? 'lg' 
           : 'md'
       }
     },
     methods: {
-      clicky() {
-        this.clickCounter++
-        if(this.clickCounter >= 10) {
-          this.clickCounter = 0
-          this.state = 3
-        }
+      paid(email) {
+        this.email = email
+        this.state = 2
       },
       shown() {
         let self = this
