@@ -16,7 +16,7 @@ div(style="padding-bottom:3em")
         ul
           li(v-for="socialMediaLink in socialMedia")
             a(:href="socialMediaLink.url" target="_blank") {{socialMediaLink.type}}
-      section(v-if="shows.length > 0")
+      //section(v-if="shows.length > 0")
         h3 Shows
         ul
           li(v-for="show in shows")
