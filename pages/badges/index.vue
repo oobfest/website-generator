@@ -169,7 +169,7 @@ div.text-center
       confirmPerformerEmail() {
         let self = this
         axios
-          .post('http://app.oobfest.com/api/submissions/confirm-performer-email', {email: this.performerBadge.email})
+          .post('https://app.oobfest.com/api/submissions/confirm-performer-email', {email: this.performerBadge.email})
           .then(function(response) {
             let isValid = response.data.valid
             if(isValid) {
@@ -209,7 +209,7 @@ div.text-center
         },
         payment: function(data, actions) {
           return actions.request
-            .post('http://app.oobfest.com/api/paypal/create-badge-all-sale', self.badge)
+            .post('https://app.oobfest.com/api/paypal/create-badge-all-sale', self.badge)
             .then(function(response) {
               return response.id;
             })
@@ -227,7 +227,7 @@ div.text-center
                 quantity: paymentData.transactions[0].item_list.items[0].quantity
               }
               return actions.request
-                .post('http://app.oobfest.com/api/paypal/execute-badge-all-sale', requestData)
+                .post('https://app.oobfest.com/api/paypal/execute-badge-all-sale', requestData)
                 .then(function(response) {
                   self.cardState++
                 })
@@ -256,7 +256,7 @@ div.text-center
         },
         payment: function(data, actions) {
           return actions.request
-            .post('http://app.oobfest.com/api/paypal/create-performer-badge-sale', self.performerBadge)
+            .post('https://app.oobfest.com/api/paypal/create-performer-badge-sale', self.performerBadge)
             .then(function(response) {
               return response.id;
             })
@@ -274,7 +274,7 @@ div.text-center
                 weekendOnly: self.performerBadge.weekendOnly
               }
               return actions.request
-                .post('http://app.oobfest.com/api/paypal/execute-performer-badge-sale', requestData)
+                .post('https://app.oobfest.com/api/paypal/execute-performer-badge-sale', requestData)
                 .then(function(response) {
                   self.state++
                 })

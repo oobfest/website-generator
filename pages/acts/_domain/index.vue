@@ -33,7 +33,7 @@ export default {
   async asyncData ({ params, error, payload }) {
     if(payload) return payload
     else return axios
-      .get('http://app.oobfest.com/api/submissions/get-act/' + params.domain)
+      .get('https://app.oobfest.com/api/submissions/get-act/' + params.domain)
       .then((response)=> {
         response.data.shows = []
         return response.data

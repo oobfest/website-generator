@@ -29,7 +29,7 @@ export default {
   async asyncData ({ params, error, payload }) {
     if(payload) return payload
     else return axios
-      .get('http://app.oobfest.com/api/shows/public')
+      .get('https://app.oobfest.com/api/shows/public')
       .then((response)=> {
         return {shows: response.data}
       })

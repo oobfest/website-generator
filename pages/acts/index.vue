@@ -18,7 +18,7 @@
     },
     asyncData() {
       return axios
-        .get('http://app.oobfest.com/api/submissions/get-valid-acts')
+        .get('https://app.oobfest.com/api/submissions/get-valid-acts')
         .then((response)=> {
           let featuredActs = response.data
             .filter(a=> a.headliner)

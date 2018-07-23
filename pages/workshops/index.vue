@@ -22,7 +22,7 @@
     async asyncData({params, error, payload}) {
       if(payload) return {workshops: payload}
       else return axios
-        .get('http://app.oobfest.com/api/workshops/public')
+        .get('https://app.oobfest.com/api/workshops/public')
         .then((response)=> {
           return {workshops: response.data}
         })

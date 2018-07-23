@@ -79,7 +79,7 @@
         },
         payment: function(data, actions) {
           return axios
-            .post('http://app.oobfest.com/api/paypal/create-ticket-sale/' + self.showId, self.ticket)
+            .post('https://app.oobfest.com/api/paypal/create-ticket-sale/' + self.showId, self.ticket)
             .then(function(response) {
               return response.data.id
             })
@@ -98,7 +98,7 @@
                 ticket: self.ticket
               }
               return axios
-                .post('http://app.oobfest.com/api/paypal/execute-ticket-sale/' + self.showId, requestData)
+                .post('https://app.oobfest.com/api/paypal/execute-ticket-sale/' + self.showId, requestData)
                 .then(function(response) {
                   self.$emit('paid')
                 })

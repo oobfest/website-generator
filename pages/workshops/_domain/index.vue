@@ -104,7 +104,7 @@ div
     async asyncData({params, error, payload}) {
       // Always get via API, in case workshop sells out
       return axios
-        .get('http://app.oobfest.com/api/workshops/get-by-domain/' + params.domain)
+        .get('https://app.oobfest.com/api/workshops/get-by-domain/' + params.domain)
         .then((response)=> {
           return {workshop: response.data}
         })
@@ -137,7 +137,7 @@ div
         },
         payment: function(data, actions) {
           return actions.request
-            .post('http://app.oobfest.com/api/paypal/create-workshop-sale', {name: self.workshop.name, quantity: self.ticket.quantity})
+            .post('https://app.oobfest.com/api/paypal/create-workshop-sale', {name: self.workshop.name, quantity: self.ticket.quantity})
             .then(function(response) {
               return response.id
             })
@@ -156,7 +156,7 @@ div
                 quantity: paymentData.transactions[0].item_list.items[0].quantity
               }
               return actions.request
-                .post('http://app.oobfest.com/api/paypal/execute-workshop-sale', requestData)
+                .post('https://app.oobfest.com/api/paypal/execute-workshop-sale', requestData)
                 .then(function(response) {
                   self.state++
                 })

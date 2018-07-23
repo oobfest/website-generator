@@ -6,19 +6,19 @@
           li.nav-item
             span &nbsp; 
             font-awesome-icon(:icon="['fab', 'facebook']")
-            a.m-2(href="http://www.facebook.com/oobfest")
+            a.m-2(href="https://www.facebook.com/oobfest")
               span.footer-link-text Facebook
             span.d-none.d-md-inline | 
           li.nav-item 
             span &nbsp; 
             font-awesome-icon(:icon="['fab', 'twitter']")
-            a.m-2(href="http://www.twitter.com/oobfest")
+            a.m-2(href="https://www.twitter.com/oobfest")
               span.footer-link-text Twitter
             span.d-none.d-md-inline | 
           li.nav-item
             span &nbsp; 
             font-awesome-icon(:icon="['fab', 'instagram']")
-            a.m-2(href="http://www.instagram.com/oobfest")
+            a.m-2(href="https://www.instagram.com/oobfest")
               span.footer-link-text Instagram
             span.d-none.d-md-inline | 
           li.nav-item

@@ -82,7 +82,7 @@
       shown() {
         let self = this
         return axios
-          .get('http://app.oobfest.com/api/shows/get-remaining-tickets/' + self.show._id)
+          .get('https://app.oobfest.com/api/shows/get-remaining-tickets/' + self.show._id)
           .then((response)=> {
             self.remaining = Number(response.data.remaining)
           })
@@ -96,7 +96,7 @@
 
         let self = this
         axios
-          .post('http://app.oobfest.com/api/shows/badge-reservation/' + showId, {email: self.email, quantity: self.quantity})
+          .post('https://app.oobfest.com/api/shows/badge-reservation/' + showId, {email: self.email, quantity: self.quantity})
           .then(function(response) {
             if(response.data.reservationSuccessful) {
               self.state++

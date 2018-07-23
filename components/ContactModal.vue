@@ -46,7 +46,7 @@ div
         data.append('message', this.contactFormData.message)
 
         axios
-          .post('http://app.oobfest.com/api/email/contact', data)
+          .post('https://app.oobfest.com/api/email/contact', data)
           .then(function(response) {
             alert("Message sent!")
           })

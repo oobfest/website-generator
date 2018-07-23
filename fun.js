@@ -2,11 +2,11 @@ let axios = require('axios')
 let limax = require('limax')
 
 function getActs() {
-  return axios.get('http://app.oobfest.com/api/submissions/get-valid-acts')
+  return axios.get('https://app.oobfest.com/api/submissions/get-valid-acts')
 }
 
 function getWorkshops() {
-  return axios.get('http://app.oobfest.com/api/workshops/public/')
+  return axios.get('https://app.oobfest.com/api/workshops/public/')
 }
 
 axios

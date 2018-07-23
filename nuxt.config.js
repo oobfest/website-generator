@@ -6,15 +6,15 @@ let limax = require('limax')
 let isDev = process.env.npm_lifecycle_event == 'dev'
 
 function getActs() {
-  return axios.get('http://app.oobfest.com/api/submissions/get-valid-acts')
+  return axios.get('https://app.oobfest.com/api/submissions/get-valid-acts')
 }
 
 function getWorkshops() {
-  return axios.get('http://app.oobfest.com/api/workshops/public/')
+  return axios.get('https://app.oobfest.com/api/workshops/public/')
 }
 
 function getShows() {
-  return axios.get('http://app.oobfest.com/api/shows/public/')
+  return axios.get('https://app.oobfest.com/api/shows/public/')
 }
 
 
