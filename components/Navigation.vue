@@ -7,7 +7,7 @@
             span.footer-link-text Home
         li.nav-item
           a.m-2(href="/schedule")
-            span.footer-link.text Schedule
+            span.footer-link.text Schedule / Buy Tickets
         li.nav-item
           a.m-2(href="/acts")
             span.footer-link-text Lineup

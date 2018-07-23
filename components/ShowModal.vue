@@ -24,7 +24,7 @@
             .text-right
               button.btn.btn-secondary(type="button" @click="$refs.showModal.hide()") Cancel
               | &nbsp;
-              button.btn.btn-primary(type="button" @click="state=3") Buy Tickets
+              button.btn.btn-primary(type="button" @click="state=3") Buy Tickets – ${{show.price}}
               | &nbsp;
               button.btn.btn-primary(type="button" @click="state++") Reserve with Badge
       section(v-show="state==1")
