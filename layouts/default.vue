@@ -1,9 +1,16 @@
 <template lang="pug">
-  main
-    .container-fluid.background-graphic
-      navigation
-      nuxt
-    navigation-footer
+  div
+    script(async src="https://www.googletagmanager.com/gtag/js?id=UA-114369938-1")
+    script.
+      window.dataLayer = window.dataLayer || []
+      function gtag(){dataLayer.push(arguments)}
+      gtag('js', new Date())
+      gtag('config', 'UA-114369938-1')
+    main
+      .container-fluid.background-graphic
+        navigation
+        nuxt
+      navigation-footer
 </template>
 
 <script>

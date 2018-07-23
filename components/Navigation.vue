@@ -6,11 +6,11 @@
           a.m-2(href="/")
             span.footer-link-text Home
         li.nav-item
-          a.m-2(href="/acts")
-            span.footer-link-text Lineup
-        li.nav-item
           a.m-2(href="/schedule")
             span.footer-link.text Schedule
+        li.nav-item
+          a.m-2(href="/acts")
+            span.footer-link-text Lineup
         li.nav-item
           a.m-2(href="/badges")
             span.footer-link.text Get Badges

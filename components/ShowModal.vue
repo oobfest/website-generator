@@ -11,18 +11,22 @@
           li.media(v-for="act in show.acts")
             img.mr-3.align-self-center(:src="act.imageUrl + 'b.jpg'" v-if="act.imageUrl")
             .media-body.align-self-center
-              h2.modal-act-name {{act.name}} 
+              h2.modal-act-name {{act.name}}
                 small &mdash; {{formatActType(act.type)}}
               p.modal-act-description {{act.description}}
-        div.text-right(v-if="remaining<=0")
-            strong.text-danger This show is sold out!
+        div.text-center(v-if="show._id == '5b1ec986bd40f900140ae3a7'")
+          p Shit-Faced Shakespeare is an independent show! Please purchase tickets to their show from 
+            a(href="https://www.shit-facedshakespeare.com/tickets-for-austin-shows--atx.html" target="_blank" style="color: #f9a01b") their website
         div(v-else)
-          .text-right
-            button.btn.btn-secondary(type="button" @click="$refs.showModal.hide()") Cancel
-            | &nbsp;
-            //button.btn.btn-primary(type="button" @click="state=3") Buy Tickets
-            | &nbsp;
-            button.btn.btn-primary(type="button" @click="state++") Reserve with Badge
+          div.text-right(v-if="remaining<=0")
+              strong.text-danger This show is sold out!
+          div(v-else)
+            .text-right
+              button.btn.btn-secondary(type="button" @click="$refs.showModal.hide()") Cancel
+              | &nbsp;
+              button.btn.btn-primary(type="button" @click="state=3") Buy Tickets
+              | &nbsp;
+              button.btn.btn-primary(type="button" @click="state++") Reserve with Badge
       section(v-show="state==1")
         .form-group
           label Badge Email
@@ -113,7 +117,7 @@
       },
       reset() {
         this.state = 0
-        this.email = ""
+        // Keep the same email address for convenience!
         this.quantity = 1
       },
       formatVenue(venue) {

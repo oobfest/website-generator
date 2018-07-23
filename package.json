@@ -29,7 +29,6 @@
     "nuxt-fontawesome": "^0.3.0",
     "pug": "^2.0.3",
     "sass-loader": "^7.0.3",
-    "vue-analytics": "^5.12.2",
     "vue-markdown": "^2.2.4"
   },
   "devDependencies": {

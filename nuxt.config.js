@@ -84,9 +84,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: isDev 
-    ? []
-    : [{ src: '@/plugins/google-analytics'}],
+  plugins: [],
   /*
   ** Nuxt.js modules
   */

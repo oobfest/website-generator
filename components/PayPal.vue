@@ -14,7 +14,6 @@
     label(for="quantity") Quantity
     select#paypal-quantity.custom-select(name="quantity" v-model="ticket.quantity")
       option(v-for="n in remaining") {{n}}
-    button.btn.btn-info(type="button" @click="testPaid") Clicky
   .row
     .col-3
     .col-6
@@ -38,9 +37,6 @@
       }
     },
     methods: {
-      testPaid() {
-        this.$emit('paid', this.ticket.email)
-      },
       isValid() {
         return this.ticket.name != '' &&
           this.ticket.email != '' &&
