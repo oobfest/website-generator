@@ -2,21 +2,27 @@
   b-modal#workshop-modal(:size="modalSize" ref="workshopModal" @hidden="reset" @shown="shown" hide-footer=true)
     template(slot="modal-header") 
       span {{workshop.day}}, {{formatVenue(workshop.venue)}} at {{formatTime(workshop.time)}}
-      button.close(type="button" @click="$refs.showModal.hide()") &times;
+      button.close(type="button" @click="$refs.workshopModal.hide()") &times;
     div.mt-2
       section(v-show="state==0")
         h2 {{workshop.name}} 
-        h3(v-if="workshop.affiliation") {{workshop.affiliation}}
-        .text-center.mb-3
+        .text-center.mb-3(v-if="workshop.imageUrl")
           img(:src="workshop.imageUrl + 'l.jpg'")
+        h3 Workshop Details
         p {{workshop.description}}
         h3 About {{workshop.teacher}}
         vue-markdown(:source="workshop.bio")
-        h4 {{formatDay(workshop.day)}}, {{formatTime(workshop.time)}} at {{formatVenue(workshop.venue)}}
-        h4(v-if="formatVenue(workshop.venue) == 'the Hideout Theatre'") 617 Congress Ave, Austin, TX 78701
+        h3 When &amp; Where
+        p {{formatDay(workshop.day)}}, {{formatTime(workshop.time)}}
+        p(v-if="formatVenue(workshop.venue) == 'the Hideout Theatre'") At the 
+          span.font-italic Hideout Theatre, 617 Congress Ave, Austin, TX 78701
+        p(v-else) At 
+          span.font-italic {{formatVenue(workshop.venue)}}
         .text-center.mt-3
           div(v-if="workshop.remaining > 0")
-            button.btn.btn-primary.btn-lg(@click="state++") Buy Reservation - $45
+            button.btn.btn-secondary.btn-lg(type="button" @click="$refs.workshopModal.hide()") Cancel
+            | &nbsp;
+            button.btn.btn-primary.btn-lg(type="button" @click="state++") Buy Reservation - $45
           div(v-else)
             p.text-danger This workshop has sold out!
       section(v-show="state==1")
@@ -77,9 +83,20 @@
     methods: {
       shown() {
         // Get workshop info
+        let self = this
+        axios
+          .get('https://app.oobfest.com/api/workshops/get-remaining/' + self.workshop._id)
+          .then(function(response) {
+            self.workshop.remaining = response.data.remaining
+          })
+          .catch(function(error) {
+            alert("Error getting workshop data")
+            console.log(error)
+          })
       },
       reset() {
-
+        this.state = 0
+        this.quantity = 1
       },
       formatDay(day) {
         if(day=='Saturday') return 'Saturday, September 1st'

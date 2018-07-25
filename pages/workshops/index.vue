@@ -13,8 +13,7 @@ div
           li On the day of the class students can register in person if the workshop has not sold out.
           li A student’s spot in a workshop is forfeited if they are more than 10 minutes late without notification. Their spot will become available to those on the waitlist. 
         h2 Questions?
-        p.mb-0 Please contact our Education Director, Asaf Ronen, via 
-          a(href="#") this form
+        asaf-contact-modal
   .row.pb-4
     .col
       div(v-for="day in days")
@@ -37,8 +36,9 @@ div
   import axios from 'axios'
   import Headline from '@/components/Headline'
   import WorkshopModal from '@/components/WorkshopModal'
+  import AsafContactModal from '@/components/AsafContactModal'
   export default {
-    components: {Headline, WorkshopModal},
+    components: {Headline, WorkshopModal, AsafContactModal},
     data() {
       return {
         days: ['Saturday', 'Sunday'],
