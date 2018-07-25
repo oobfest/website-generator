@@ -1,5 +1,6 @@
 <template lang="pug">
 .container-fluid
+  headline(:text="'Schedule'")
   .row
     .col
       show-modal(:show="modalModel")
@@ -14,8 +15,10 @@
                   ul.list-unstyled
                     li.media(v-for="act in show.acts") 
                       img(:src="act.imageUrl + 's.jpg'" v-if="act.imageUrl")
-                      .media-body.align-self-center
-                        .act-name {{act.name}}
+                      .media-body.ml-2.align-self-center(style="line-height: 1")
+                        span.act-name {{act.name}}
+                        br
+                        span.act-location(v-if="act.city && act.city != 'Austin'") {{act.city}}, {{act.state}}
                   .text-center(v-if="show.remaining <= 0")
                     span.sold-out Sold out!
 
@@ -23,9 +26,10 @@
 
 <script>
 import axios from 'axios'
+import Headline from '@/components/Headline'
 import ShowModal from '@/components/ShowModal'
 export default {
-  components: {ShowModal},
+  components: {ShowModal, Headline},
   async asyncData ({ params, error, payload }) {
     if(payload) return payload
     else return axios
@@ -115,9 +119,6 @@ export default {
     color: #eb4d30;
   }
 
-  .schedule {
-  }
-
   .tabs {
     background-color: rgba(0,0,0,0.5);
     margin-top: 2rem;
@@ -145,7 +146,10 @@ export default {
 
   .act-name {
     font-size: 17px;
-    margin-left: 1rem;
+  }
+
+  .act-location {
+    font-size: 12px;
   }
 
   .media + .media {

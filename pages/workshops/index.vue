@@ -1,24 +1,51 @@
 <template lang="pug">
+div
+  headline(:text="'Workshops'")
+  workshop-modal(:workshop="selectedWorkshop")
   .row
     .col
-      .table-responsive
-        table.table.table-dark.table-striped
-          tbody
-            tr(v-for="workshop in workshops")
-              td
-                h2 {{workshop.name}} 
-                h3 by {{workshop.teacher}}
-                p {{workshop.description}} 
-                a.btn.btn-primary.btn-lg(:href="'/workshops/' + workshop.domain") See More
-              td.middle
-                img(:src="workshop.imageUrl + 'm.jpg'")
+      .box
+        h2 Workshop Information
+        ul
+          li Workshops are 3 hours long and cost $45/student until the end of July 31st. After July 31st the price will increase to $55/student. 
+          li If a workshop sells out you can get on a waiting list. As students drop reservations will become available to people on the waitlist in the order they signed up.
+          li Workshops are open to anyone but it is recommended that students have some improv experience.
+          li On the day of the class students can register in person if the workshop has not sold out.
+          li A student’s spot in a workshop is forfeited if they are more than 10 minutes late without notification. Their spot will become available to those on the waitlist. 
+        h2 Questions?
+        p.mb-0 Please contact our Education Director, Asaf Ronen, via 
+          a(href="#") this form
+  .row.pb-4
+    .col
+      div(v-for="day in days")
+        ul.list-group
+          div(v-for="time in times")
+            li.list-group-item(v-for="workshop in workshopsByDay(day).filter(w=>w.time == time)") 
+              .media.align-items-center.flex-wrap-reverse
+                .media-body.m-3
+                  h2 {{workshop.name}} 
+                    small.font-italic &mdash; {{workshop.teacher}}
+                  h3(v-if="workshop.affiliation") {{workshop.affiliation}}
+                  h4 {{formatDay(day)}}, {{formatTime(time)}} at {{formatVenue(workshop.venue)}}
+                  p {{workshop.description}}
+                  button.btn.btn-primary.btn-lg(type="button" v-b-modal.workshop-modal @click="selectedWorkshop = workshop") Read More
+                img(:src="workshop.imageUrl + 'm.jpg'" style="max-width: 250px")
           
 </template>
 
 <script>
   import axios from 'axios'
-  import limax from 'limax'
+  import Headline from '@/components/Headline'
+  import WorkshopModal from '@/components/WorkshopModal'
   export default {
+    components: {Headline, WorkshopModal},
+    data() {
+      return {
+        days: ['Saturday', 'Sunday'],
+        times: [10, 40],
+        selectedWorkshop: {}
+      }
+    },
     async asyncData({params, error, payload}) {
       if(payload) return {workshops: payload}
       else return axios
@@ -27,11 +54,29 @@
           return {workshops: response.data}
         })
     },
-    computed: {
-      domain() {
-        return '/' + limax(name)
+    methods: {
+      formatDay(day) {
+        if(day=='Saturday') return 'Saturday, September 1st'
+        if(day=='Sunday') return 'Sunday, September 2nd'
+        else return day
       },
-
+      formatVenue(venue) {
+        switch(venue) {
+          case 'Hideout Down':
+          case 'Hideout Up':
+          case 'Hideout Classroom':
+            return 'the Hideout Theatre'
+          default: return venue
+        }
+      },
+      formatTime(time) {
+        if(time == 10) return '11:00am'
+        else return '3:00pm'
+      },
+      workshopsByDay(day) {
+        return this.workshops
+          .filter(w=> w.day == day)
+      }
     }
   }
 
@@ -47,4 +92,14 @@
     vertical-align: middle;
     text-align: center;
   }
+  .list-group-item, .box {
+    background-color: rgba(0, 0, 0, 0.75);
+    border: 1px solid grey;
+    margin-top: 1rem;
+  }
+
+  .box {
+    padding: 2rem;
+  }
+
 </style>

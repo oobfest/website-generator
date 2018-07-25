@@ -13,6 +13,7 @@
             .media-body.align-self-center
               h2.modal-act-name {{act.name}}
                 small &mdash; {{formatActType(act.type)}}
+              h5(v-if="act.city") {{act.city}}, {{act.state}}
               p.modal-act-description {{act.description}}
         div.text-center(v-if="show._id == '5b1ec986bd40f900140ae3a7'")
           p Shit-Faced Shakespeare is an independent show! Please purchase tickets to their show from 
@@ -152,27 +153,6 @@
 
   .modal-act-description {
     font-size: 1rem;
-  }
-
-  .modal {
-    color: white;
-  }
-
-  .close {
-    color: white;
-  }
-
-  .close:hover {
-    color: white;
-  }
-
-  .modal-content {
-    background-color: #2c3034;
-  }
-
-  .modal-header, .modal-footer {
-    background-color: #212529;
-    border: none;
   }
 
   .formy {

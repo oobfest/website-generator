@@ -21,12 +21,22 @@ h1 {
 }
 
 h2 {
+  line-height: 1;
   font-variant: small-caps;
 }
 
 h3 {
   color: #eb4d30;
   text-transform: uppercase;
+  font-weight: bold;
+}
+
+h4 {
+  color: #6e8e44;
+  font-weight: bold
+}
+
+h5 {
   font-weight: bold;
 }
 
@@ -93,3 +103,27 @@ a.no-underline-on-hover:hover { text-decoration: none !important; }
   background-color: #0f5f69;
   border-color: #041f23;
 }
+
+
+/* Modals */
+.modal {
+  color: white;
+}
+
+.close {
+  color: white;
+}
+
+.close:hover {
+  color: white;
+}
+
+.modal-content {
+  background-color: #2c3034;
+}
+
+.modal-header, .modal-footer {
+  background-color: #212529;
+  border: none;
+}
+/* Modals END */

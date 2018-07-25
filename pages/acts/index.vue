@@ -1,16 +1,18 @@
 <template lang="pug">
+div
+  headline(:text="'Lineup'")
   .row
     .col
-      h2.text-center Lineup
       acts-grid(:acts="acts")
 </template>
 
 <script>
   import axios from 'axios'
+  import Headline from '@/components/Headline'
   import ActsGrid from '@/components/ActsGrid'
 
   export default {
-    components: {ActsGrid},
+    components: {ActsGrid, Headline},
     data() {
       return {
         acts: []

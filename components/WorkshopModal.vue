@@ -1,28 +1,24 @@
-<template lang="pug">
-div
-  script(src="https://www.paypalobjects.com/api/checkout.js")
-  .row.justify-content-center
-    .col-md-8.workshop
-      h2 {{workshop.name}}
-      p By 
-        span.font-italic {{workshop.teacher}}
-        span(v-if="workshop.affiliation")  from 
-          span.font-italic {{workshop.affiliation}}
-        .text-center
-          img.m-2.img-fluid(:src="thumbnailUrl")
+<template lang='pug'>
+  b-modal#workshop-modal(:size="modalSize" ref="workshopModal" @hidden="reset" @shown="shown" hide-footer=true)
+    template(slot="modal-header") 
+      span {{workshop.day}}, {{formatVenue(workshop.venue)}} at {{formatTime(workshop.time)}}
+      button.close(type="button" @click="$refs.showModal.hide()") &times;
+    div.mt-2
       section(v-show="state==0")
-        h3 Workshop Details
-        vue-markdown {{workshop.description}}
-        h3 Teacher Bio
-        vue-markdown {{workshop.bio}}
-        h3 Event Details
-        p {{workshop.day}}, {{getTime(workshop.time)}} at {{getVenue(workshop.venue)}}
-        .text-center
-          .form-group(v-if="workshop.remaining > 0")
-            button.btn.btn-primary.btn-lg(@click="state++" type="button") Get Reservation - $45*
-            p.mt-3 * Special "early bird" price until August 1st
-          div(v-else).text-center
-            p.sold-out This workshop has sold out!
+        h2 {{workshop.name}} 
+        h3(v-if="workshop.affiliation") {{workshop.affiliation}}
+        .text-center.mb-3
+          img(:src="workshop.imageUrl + 'l.jpg'")
+        p {{workshop.description}}
+        h3 About {{workshop.teacher}}
+        vue-markdown(:source="workshop.bio")
+        h4 {{formatDay(workshop.day)}}, {{formatTime(workshop.time)}} at {{formatVenue(workshop.venue)}}
+        h4(v-if="formatVenue(workshop.venue) == 'the Hideout Theatre'") 617 Congress Ave, Austin, TX 78701
+        .text-center.mt-3
+          div(v-if="workshop.remaining > 0")
+            button.btn.btn-primary.btn-lg(@click="state++") Buy Reservation - $45
+          div(v-else)
+            p.text-danger This workshop has sold out!
       section(v-show="state==1")
         .form-group
           label(for="name") Name 
@@ -41,22 +37,26 @@ div
         .row
           .col.text-right
             .form-group
+              script(src="https://www.paypalobjects.com/api/checkout.js")
               #paypal-button
           .col.text-left
             .form-group
-              button.btn.btn-secondary(type="button" @click="state--") Cancel
+              button.btn.btn-secondary(type="button" @click="state--") Back
       section(v-show="state==2")
         p Thank you for your purchase!
         p An email has been sent to 
           span.code {{ticket.email}}
 
+
 </template>
 
 <script>
-  import VueMarkdown from 'vue-markdown'
   import axios from 'axios'
+  import VueMarkdown from 'vue-markdown'
 
   export default {
+    components: {VueMarkdown},
+    props: ['workshop'],
     data() {
       return {
         state: 0,
@@ -68,24 +68,36 @@ div
         }
       }
     },
-    components: {VueMarkdown},
     computed: {
-      thumbnailUrl() {
-        return this.workshop.imageUrl + 'l.jpeg'
-      }
+      modalSize() {
+        if(this.state>0) return 'md'
+        else return 'lg'
+      } 
     },
     methods: {
-      getTime(time) {
-        if(time=="10") return "11:00am"
-        if(time=="20") return "12:00pm"
-        if(time=="30") return "1:00pm"
-        if(time=="40") return "3:00pm"
+      shown() {
+        // Get workshop info
       },
-      getVenue(venue) {
-        if(venue=="Hideout Down") return "the Hideout Theatre"
-        if(venue=="Hideout Up") return "the Hideout Theatre"
-        if(venue=="Hideout Classroom") return "the Hideout Theatre"
-        else return venue
+      reset() {
+
+      },
+      formatDay(day) {
+        if(day=='Saturday') return 'Saturday, September 1st'
+        if(day=='Sunday') return 'Sunday, September 2nd'
+        else return day
+      },
+      formatVenue(venue) {
+        switch(venue) {
+          case 'Hideout Down':
+          case 'Hideout Up':
+          case 'Hideout Classroom':
+            return 'the Hideout Theatre'
+          default: return venue
+        }
+      },
+      formatTime(time) {
+        if(time == 10) return '11:00am'
+        else return '3:00pm'
       },
       isValid() {
         return this.ticket.name != '' &&
@@ -100,18 +112,6 @@ div
         document.querySelector('#email').addEventListener('change', handler)
         document.querySelector('#phone').addEventListener('change', handler)
       }
-    },
-    async asyncData({params, error, payload}) {
-      // Always get via API, in case workshop sells out
-      return axios
-        .get('https://app.oobfest.com/api/workshops/get-by-domain/' + params.domain)
-        .then((response)=> {
-          return {workshop: response.data}
-        })
-        .catch((error)=> {
-          alert("Error loading workshop")
-          console.log(error)
-        })
     },
     mounted() {
       let self = this
@@ -166,18 +166,3 @@ div
     }
   }
 </script>
-
-<style>
-  .workshop {
-    border: 2px solid grey;
-    margin: 1rem;
-    padding: 1rem;
-    background-color: rgba(0,0,0,0.75);
-    box-shadow: 3px 3px 5px black;
-  }
-  .sold-out {
-    padding: 0.5em;
-    background-color: #15808c;
-  }
-
-</style>
