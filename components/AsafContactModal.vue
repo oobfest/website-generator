@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   p.mb-0 Please contact our Education Director, Asaf Ronen, via 
-    a(href="#" @click="showModal") this form
+    a(href="#" @click="showModal" style="text-decoration: underline") this form
     | .
   b-modal(title="Contact Asaf" ref="contactAsafModal")
     .form-group

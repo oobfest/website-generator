@@ -26,7 +26,7 @@ div
                     small.font-italic &mdash; {{workshop.teacher}}
                   h3(v-if="workshop.affiliation") {{workshop.affiliation}}
                   h4 {{formatDay(day)}}, {{formatTime(time)}} at {{formatVenue(workshop.venue)}}
-                  p {{workshop.description}}
+                  p.d-none.d-sm-block {{workshop.description}}
                   button.btn.btn-primary.btn-lg(type="button" v-b-modal.workshop-modal @click="selectedWorkshop = workshop") Read More
                 img(:src="workshop.imageUrl + 'm.jpg'" style="max-width: 250px")
           

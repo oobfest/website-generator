@@ -14,4 +14,10 @@
   .display-3 {
     word-break: break-all;
   }
+
+  @media (max-width: 576px) {
+    .display-3 {
+      font-size:2.5rem;
+    }
+  }
 </style>

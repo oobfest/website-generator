@@ -7,7 +7,7 @@
       section(v-show="state==0")
         h2 {{workshop.name}} 
         .text-center.mb-3(v-if="workshop.imageUrl")
-          img(:src="workshop.imageUrl + 'l.jpg'")
+          img.img-fluid(:src="workshop.imageUrl + 'l.jpg'")
         h3 Workshop Details
         p {{workshop.description}}
         h3 About {{workshop.teacher}}
