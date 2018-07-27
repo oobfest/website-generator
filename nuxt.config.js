@@ -33,7 +33,7 @@ module.exports = {
 
           routes.push({ route: '/acts/', payload: acts })
           routes.push({ route: '/workshops/', payload: workshops })
-          routes.push({ route: '/shows/', payload: allShows })
+          routes.push({ route: '/schedule/', payload: allShows })
           
           for(let act of acts) {
             let showsTheActIsIn = []
@@ -98,11 +98,6 @@ module.exports = {
       {set: '@fortawesome/free-brands-svg-icons', icons: ['faGithub', 'faInstagram', 'faFacebook', 'faFlickr', 'faTwitter']},
       {set: '@fortawesome/free-solid-svg-icons', icons: ['faEnvelope']}
     ]
-  },
-
-  // Router (added by me!)
-  router: {
-    middleware: ['redirect']
   },
 
   // Axios custom configuration

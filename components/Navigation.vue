@@ -6,7 +6,7 @@
           a.m-2(href="/")
             span.footer-link-text Home
         li.nav-item
-          a.m-2(href="/shows")
+          a.m-2(href="/schedule")
             span.footer-link.text Schedule / Buy Tickets
         li.nav-item
           a.m-2(href="/acts")
