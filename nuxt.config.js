@@ -72,25 +72,16 @@ module.exports = {
     ]
   },
 
-  /*
-  ** Customize the progress-bar color
-  */
+  // Apparently there's a progress bar?
   loading: { color: '#FFFFFF' },
 
-  /*
-  ** Global CSS
-  */
-  css: [
-    '@/assets/scss/custom.scss'
-  ],
+  // Global CSS file
+  css: ['@/assets/scss/custom.scss'],
 
-  /*
-  ** Plugins to load before mounting the App
-  */
+  // Plugins
   plugins: [],
-  /*
-  ** Nuxt.js modules
-  */
+
+  // Modules
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
@@ -100,28 +91,29 @@ module.exports = {
     // Added by me!
     'nuxt-fontawesome',
   ],
+
+  // Font Awesome!
   fontawesome: {
     imports: [
       {set: '@fortawesome/free-brands-svg-icons', icons: ['faGithub', 'faInstagram', 'faFacebook', 'faFlickr', 'faTwitter']},
       {set: '@fortawesome/free-solid-svg-icons', icons: ['faEnvelope']}
     ]
   },
-  /*
-  ** Axios module configuration
-  */
+
+  // Router (added by me!)
+  router: {
+    middleware: ['redirect']
+  },
+
+  // Axios custom configuration
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
   },
 
-  /*
-  ** Build configuration
-  */
+  // Build configuration
   build: {
-    /*
-    ** You can extend webpack config here
-    */
-    extend(config, ctx) {
-      
-    }
+
+    // Extend webpack config here
+    extend(config, ctx) {}
   }
 }
