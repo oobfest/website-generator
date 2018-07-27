@@ -18,8 +18,9 @@ div
         acts: []
       }
     },
-    asyncData() {
-      return axios
+    async asyncData({params, error, payload}) {
+      if(payload) return {workshops: payload}
+      else return axios
         .get('https://app.oobfest.com/api/submissions/get-valid-acts')
         .then((response)=> {
           let featuredActs = response.data

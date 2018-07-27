@@ -33,16 +33,19 @@ module.exports = {
 
           routes.push({ route: '/acts/', payload: acts })
           routes.push({ route: '/workshops/', payload: workshops })
+          routes.push({ route: '/shows/', payload: allShows })
           
           for(let act of acts) {
-
             let showsTheActIsIn = []
             for(let show of allShows)
               for(let showAct of show.acts)
                 if (showAct._id == act._id) showsTheActIsIn.push(show)
-
             act.shows = showsTheActIsIn
-            routes.push({route: '/acts/' + act.domain, payload: act})
+            routes.push({route: '/acts/' + act.domain, payload: act })
+          }
+
+          for (let show of allShows) {
+            routes.push({route: `/shows/${show.day.toLowerCase()}/${limax(show.venue)}/${show.time}/`, payload: show })
           }
 
           for(let workshop of workshops) {

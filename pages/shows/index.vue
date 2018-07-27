@@ -1,27 +1,32 @@
 <template lang="pug">
 .container-fluid
   headline(:text="'Schedule'")
+  show-modal(:show="modalModel")
   .row
     .col
-      show-modal(:show="modalModel")
-      b-tabs(pills)
-        b-tab(v-for="(day, index) in schedule",:key="index",:title="formatDay(day.name)")
-          ul.list-unstyled.d-flex.flex-wrap.justify-content-around
-            li.venue(v-for="venue in day.venues") 
-              h3 {{formatVenue(venue)}}
-              ul.list-unstyled
-                li.showy.text-center(v-for="show in getShowsByDayAndVenue(day.name, venue)" v-b-modal.show-modal @click="modalModel = show")
-                  span.time {{formatTime(show.time)}}
-                  ul.list-unstyled
-                    li.media(v-for="act in show.acts") 
-                      img(:src="act.imageUrl + 's.jpg'" v-if="act.imageUrl")
-                      .media-body.ml-2.align-self-center(style="line-height: 1")
-                        span.act-name {{act.name}}
-                        br
-                        span.act-location(v-if="act.city && act.city != 'Austin'") {{act.city}}, {{act.state}}
-                  .text-center(v-if="show.remaining <= 0")
-                    span.sold-out Sold out!
-
+      .tabs
+        ul.nav.nav-pills
+          li.nav-item(v-for="(day, index) in schedule",:key="index")
+            a.nav-link(:class="{'active': selectedDay == day.name}" href="#" @click.prevent="selectedDay = day.name") {{formatDay(day.name)}}
+        .tab-content
+          .tab-pane.show.active(v-for="day in schedule" v-show="selectedDay == day.name")
+            ul.list-unstyled.d-flex.flex-wrap.justify-content-around
+              li.venue(v-for="venue in day.venues") 
+                h3 {{formatVenue(venue)}}
+                ul.list-unstyled
+                  li.showy.text-center(v-for="show in getShowsByDayAndVenue(day.name, venue)" v-b-modal.show-modal @click="modalModel = show")
+                    .mb-1
+                      span.time {{formatTime(show.time)}}
+                        span(v-if="show.endTime")  to {{show.endTime}}
+                    ul.list-unstyled
+                      li.media(v-for="act in show.acts") 
+                        img(:src="act.imageUrl + 's.jpg'" v-if="act.imageUrl")
+                        .media-body.ml-2.align-self-center(style="line-height: 1")
+                          span.act-name {{act.name}}
+                          br
+                          span.act-location(v-if="act.city && act.city != 'Austin'") {{act.city}}, {{act.state}}
+                    .text-center(v-if="show.remaining <= 0")
+                      span.sold-out Sold out!
 </template>
 
 <script>
@@ -30,17 +35,21 @@ import Headline from '@/components/Headline'
 import ShowModal from '@/components/ShowModal'
 export default {
   components: {ShowModal, Headline},
-  async asyncData ({ params, error, payload }) {
-    if(payload) return payload
+  async asyncData ({params, error, payload}) {
+    if(payload) return {shows: payload}
     else return axios
       .get('https://app.oobfest.com/api/shows/public')
-      .then((response)=> {
-        return {shows: response.data}
+      .then(function(response) {
+        return { shows: response.data }
+      })
+      .catch(function(error) {
+        return { shows: [] }
       })
   },
   data() {
     return {
       modalModel: {},
+      selectedDay: 'Tuesday',
       days: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday'],
       venues: ['Hideout Down', 'Hideout Up', 'ColdTowne', 'Fallout', 'Velveeta', 'Spider House', 'Institution'],
       schedule: [
@@ -51,7 +60,7 @@ export default {
         {name: 'Saturday',   venues: ['Hideout Down', 'Hideout Up', 'ColdTowne', 'Fallout', 'Velveeta', 'Spider House', 'Institution']},
         {name: 'Sunday',     venues: ['Hideout Down', 'Fallout', 'Velveeta']},
         {name: 'Monday',     venues: ['Hideout Down']},
-        ]
+      ]
     }
   },
   methods: {
