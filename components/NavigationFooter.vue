@@ -32,6 +32,12 @@
             font-awesome-icon(:icon="['fab', 'github']")
             a.m-2(href="https://github.com/oobfest")
               span.footer-link-text GitHub
+            span.d-none.d-md-inline | 
+          li.nav-item
+            span &nbsp;
+            font-awesome-icon(:icon="['fab', 'medium']")
+            a.m-2(href="https://medium.com/oobfest")
+              span.footer-link-text Medium
 </template>
 
 <style scoped>

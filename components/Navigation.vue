@@ -17,6 +17,9 @@
         li.nav-item
           a.m-2(href="/workshops")
             span.footer-link.text Workshops
+        li.nav-item
+          a.m-2(href="https://medium.com/oobfest" target="_blank")
+            span.footer-link.text Blog
 
     span.navbar-text.pull-right
       a.nav-link.underline-on-hover(href="#" data-toggle="modal" data-target="#contact-modal")

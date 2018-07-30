@@ -6,16 +6,16 @@ div
   b-modal(title="Contact Asaf" ref="contactAsafModal")
     .form-group
       label.col-form-label(for="contact-name") Full Name
-      input#contact-name.form-control(v-model="contactFormData.name" type="text" name="name" required)
+      input#contact-name.form-control(v-model="asafContactFormData.name" type="text" name="name" required)
     .form-group
       label.col-form-label(for="contact-email") Email
-      input#contact-email.form-control(v-model="contactFormData.email" type="email" name="email" required)
+      input#contact-email.form-control(v-model="asafContactFormData.email" type="email" name="email" required)
     .form-group
       label.col-form-label(for="contact-subject") Subject
-      input#contact-subject.form-control(v-model="contactFormData.subject" type="text" name="subject")
+      input#contact-subject.form-control(v-model="asafContactFormData.subject" type="text" name="subject")
     .form-group
       label.col-form-label(for="contact-message") Message
-      textarea#contact-message.form-control(v-model="contactFormData.message" name="message" required)
+      textarea#contact-message.form-control(v-model="asafContactFormData.message" name="message" required)
     div(slot="modal-footer")
       b-button.m-1(variant="secondary" @click="hideModal") Cancel
       b-button.m-1(variant="primary" @click="send") Send
@@ -26,7 +26,7 @@ div
   export default {
     data() {
       return {
-        contactFormData: {
+        asafContactFormData: {
           name: '',
           email: '',
           subject: '',
@@ -40,16 +40,20 @@ div
 
         // Convert to application/x-www-form-urlencoded format
         var data = new URLSearchParams()
-        data.append('name', this.contactFormData.name)
-        data.append('email', this.contactFormData.email)
-        data.append('subject', "WORKSHOPS | " + this.contactFormData.subject)
-        data.append('message', this.contactFormData.message)
+        data.append('name', this.asafContactFormData.name)
+        data.append('email', this.asafContactFormData.email)
+        data.append('subject', "WORKSHOPS | " + this.asafContactFormData.subject)
+        data.append('message', this.asafContactFormData.message)
 
         let self = this
         axios
           .post('https://app.oobfest.com/api/email/contact', data)
           .then(function(response) {
             alert("Message sent!")
+            self.asafContactFormData.name = ''
+            self.asafContactFormData.email = ''
+            self.asafContactFormData.subject = ''
+            self.asafContactFormData.message = ''
           })
           .catch(function(error) {
             alert("Error :(")
@@ -61,10 +65,6 @@ div
       },
       hideModal() {
         this.$refs.contactAsafModal.hide()
-        this.contactFormData.name = ''
-        this.contactFormData.email = ''
-        this.contactFormData.subject = ''
-        this.contactFormData.message = ''
       }
     }
   }
