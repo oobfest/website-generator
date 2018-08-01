@@ -11,8 +11,8 @@ div(style="padding-bottom:3em")
         h3 Cast &amp; Crew
         ul
           li(v-for="performer in performers") {{performer}}
-      //section(v-if="socialMedia.length > 0")
-        h3 Links
+      section(v-if="socialMedia.length > 0")
+        h3 Social Media
         ul
           li(v-for="socialMediaLink in socialMedia")
             a(:href="socialMediaLink.url" target="_blank") {{socialMediaLink.type}}
