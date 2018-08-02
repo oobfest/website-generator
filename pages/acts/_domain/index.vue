@@ -5,7 +5,10 @@ div(style="padding-bottom:3em")
     .col-md
       img.img-fluid.rounded.float-right(:src="scaledImageUrl")
     .col-md.act-details
-      h1 {{actName}}
+      h1 {{actName}} 
+        small &mdash; {{showType}}
+      h5 {{city}}, {{state}}
+        span(v-if="country != 'US'") , {{country}}
       p {{publicDescription}}
       section(v-if="performers.length > 1")
         h3 Cast &amp; Crew
