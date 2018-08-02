@@ -7,7 +7,10 @@ div
       .box
         h2 Workshop Information
         ul
-          li Workshops are 3 hours long and cost $45/student until the end of July 31st. After July 31st the price will increase to $55/student. 
+          li Workshops are 3 hours long and cost $45/student 
+            del until the end of July 31st. After July 31st the price will increase to $55/student. 
+            | &nbsp;
+            ins The early bird deadline has been extended to the end of August 3rd. After August 3rd the price will increase to $55/student. 
           li If a workshop sells out you can get on a waiting list. As students drop reservations will become available to people on the waitlist in the order they signed up.
           li Workshops are open to anyone but it is recommended that students have some improv experience.
           li On the day of the class students can register in person if the workshop has not sold out.
