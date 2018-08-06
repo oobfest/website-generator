@@ -172,7 +172,7 @@
         },
         payment: function(data, actions) {
           return actions.request
-            .post('https://app.oobfest.com:4000/api/paypal/create-workshop-sale', {name: self.workshop.name, quantity: self.ticket.quantity, auditing: self.ticket.auditing})
+            .post('https://app.oobfest.com/api/paypal/create-workshop-sale', {name: self.workshop.name, quantity: self.ticket.quantity, auditing: self.ticket.auditing})
             .then(function(response) {
               return response.id
             })

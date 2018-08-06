@@ -40,7 +40,7 @@ div
         .form-group
           label(for="quantity") Quantity
           select#quantity.custom-select(name="quantity" v-model="ticket.quantity")
-            option(v-for="n in (workshop.capacity - workshop.sold)") {{n}}
+            option(v-for="n in 2") {{n}}
         .row
           .col.text-right
             .form-group
