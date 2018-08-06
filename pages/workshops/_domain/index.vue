@@ -18,9 +18,12 @@ div
         h3 Event Details
         p {{workshop.day}}, {{getTime(workshop.time)}} at {{getVenue(workshop.venue)}}
         .text-center
-          .form-group(v-if="workshop.remaining > 0")
-            button.btn.btn-primary.btn-lg(@click="state++" type="button") Get Reservation - $45*
+          .form-group(v-if="workshop.sold < workshop.capacity")
+            button.btn.btn-primary.btn-lg(@click="state++" type="button") Get Reservation - $55*
             p.mt-3 * Special "early bird" price until August 1st
+          .form-group(v-else-if="workshop.auditSold < workshop.auditCapacity")
+            p Audit reservations available
+            //button.btn.btn-primary.btn-lg(@click="state=10" type="button") Get Audit Reservation - $15
           div(v-else).text-center
             p.sold-out This workshop has sold out!
       section(v-show="state==1")
@@ -37,7 +40,7 @@ div
         .form-group
           label(for="quantity") Quantity
           select#quantity.custom-select(name="quantity" v-model="ticket.quantity")
-            option(v-for="n in workshop.remaining") {{n}}
+            option(v-for="n in (workshop.capacity - workshop.sold)") {{n}}
         .row
           .col.text-right
             .form-group

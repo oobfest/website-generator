@@ -19,12 +19,18 @@
         p(v-else) At 
           span.font-italic {{formatVenue(workshop.venue)}}
         .text-center.mt-3
-          div(v-if="workshop.remaining > 0")
+          div(v-if="sold < workshop.capacity")
             button.btn.btn-secondary.btn-lg(type="button" @click="$refs.workshopModal.hide()") Cancel
             | &nbsp;
-            button.btn.btn-primary.btn-lg(type="button" @click="state++") Buy Reservation - $55
+            button.btn.btn-primary.btn-lg(type="button" @click="state++; ticket.auditing=false") Buy Reservation - $55
+          div(v-else-if="auditSold < workshop.auditCapacity")
+            p This workshop has sold out. There are still auditing slots available. 
+            button.btn.btn-secondary.btn-lg(type="button" @click="$refs.workshopModal.hide()") Cancel
+            | &nbsp;
+            button.btn.btn-primary.btn-lg(type="button" @click="state++; ticket.auditing=true") Buy Audit Reservation - $15
           div(v-else)
             p.text-danger This workshop has sold out!
+            pre.text-light {{auditSold}} {{workshop.auditCapacity}}
       section(v-show="state==1")
         .form-group
           label(for="name") Name 
@@ -39,15 +45,15 @@
         .form-group
           label(for="quantity") Quantity
           select#quantity.custom-select(name="quantity" v-model="ticket.quantity")
-            option(v-for="n in workshop.remaining") {{n}}
+            option(v-for="n in getTicketQuantity()") {{n}}
         .row
           .col.text-right
             .form-group
-              script(src="https://www.paypalobjects.com/api/checkout.js")
-              #paypal-button
+              button.btn.btn-secondary(type="button" @click="state--") Back
           .col.text-left
             .form-group
-              button.btn.btn-secondary(type="button" @click="state--") Back
+              script(src="https://www.paypalobjects.com/api/checkout.js")
+              #paypal-button
       section(v-show="state==2")
         p Thank you for your purchase!
         p An email has been sent to 
@@ -66,11 +72,14 @@
     data() {
       return {
         state: 0,
+        sold: 0,
+        auditSold: 0,
         ticket: {
           name: '',
           email: '',
           phone: '',
-          quantity: 1
+          quantity: 1,
+          auditing: false
         }
       }
     },
@@ -81,13 +90,22 @@
       } 
     },
     methods: {
+      getTicketQuantity() {
+        if(this.sold < this.workshop.capacity) {
+          return this.workshop.capacity - this.sold
+        }
+        else if (this.auditSold < this.workshop.auditCapacity) {
+          return this.workshop.auditCapacity - this.auditSold
+        }
+      },
       shown() {
         // Get workshop info
         let self = this
         axios
           .get('https://app.oobfest.com/api/workshops/get-remaining/' + self.workshop._id)
           .then(function(response) {
-            self.workshop.remaining = response.data.remaining
+            self.sold = response.data.sold
+            self.auditSold = response.data.auditSold
           })
           .catch(function(error) {
             alert("Error getting workshop data")
@@ -154,7 +172,7 @@
         },
         payment: function(data, actions) {
           return actions.request
-            .post('https://app.oobfest.com/api/paypal/create-workshop-sale', {name: self.workshop.name, quantity: self.ticket.quantity})
+            .post('https://app.oobfest.com:4000/api/paypal/create-workshop-sale', {name: self.workshop.name, quantity: self.ticket.quantity, auditing: self.ticket.auditing})
             .then(function(response) {
               return response.id
             })
@@ -170,6 +188,7 @@
                 name: self.ticket.name,
                 email: self.ticket.email,
                 phone: self.ticket.phone,
+                auditing: self.ticket.auditing,
                 quantity: paymentData.transactions[0].item_list.items[0].quantity
               }
               return actions.request
