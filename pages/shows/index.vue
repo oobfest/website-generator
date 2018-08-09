@@ -9,7 +9,7 @@
             li(v-for="venue in day.venues")
               ul
                 li(v-for="show in getShowsByDayAndVenue(day.name, venue)") 
-                  a(:href="`/${day.name.toLowerCase()}/${limax(venue)}/${show.time}/`") {{venue}}, {{formatTime(show.time)}}
+                  a(:href="`/shows/${day.name.toLowerCase()}/${limax(venue)}/${show.time}/`") {{venue}}, {{formatTime(show.time)}}
 </template>
 
 <script>
