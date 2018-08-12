@@ -23,7 +23,7 @@ div(style="padding-bottom:3em")
         h3 Shows
         ul
           li(v-for="show in shows")
-            a(href="#" @click.prevent="modalModel = show" v-b-modal.show-modal) {{formatDay(show.day)}}, {{formatTime(show.time)}} at {{formatVenue(show.venue)}} 
+            a(href="getUrlForShow(show)" @click.prevent="modalModel = show" v-b-modal.show-modal) {{formatDay(show.day)}}, {{formatTime(show.time)}} at {{formatVenue(show.venue)}} 
       p.text-right
         a(href="/acts") Back to Lineup
 </template>
@@ -59,6 +59,11 @@ export default {
     }
   },
   methods: {
+    getUrlForShow(show) {
+      if (show.day && show.venue && show.time)
+        return 'https://oobfest.com/shows/' + show.day.toLowerCase() + '/' + show.venue.toLowerCase().split(' ').join('-') + '/' + show.time
+      else return ''
+    },
     formatType(type) {
       if(type == 'Individual') return 'Sketch'
       else return type;
