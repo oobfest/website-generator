@@ -7,7 +7,7 @@
 
     div.mt-2
       section(v-show="state==0")
-        ul.list-unstyled.mb-0
+        ul.list-unstyled.mb-2
           li.media(v-for="act in show.acts")
             img.mr-3.align-self-center(:src="act.imageUrl + 'b.jpg'" v-if="act.imageUrl")
             .media-body.align-self-center
@@ -20,6 +20,7 @@
           | &nbsp;
           font-awesome-icon(:icon="['fas', 'share-square']" size="sm")
           div(v-show="showUrl==true")
+            //small The following links directly to 
             input#share-url.form-control.url(:value="getUrlForShow(show)" type="text" readonly onClick="this.select(); document.execCommand('copy')")
 
         div.text-center(v-if="show._id == '5b1ec986bd40f900140ae3a7'")

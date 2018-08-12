@@ -25,8 +25,6 @@ div
             button.btn.btn-primary(type="button" @click="state=3") Buy Tickets – ${{show.price}}
             | &nbsp;
             button.btn.btn-primary(type="button" @click="state++") Reserve with Badge
-            br
-            a(href="/schedule") See All Show
       section.form(v-show="state==1")
         .form-group
           label Badge Email
