@@ -58,7 +58,7 @@ div
     .row.justify-content-md-center
       .col-md-10
         .card-deck.mt-5
-          .card.bg-blue.mb-5
+          .card.bg-blue
             .card-head
               h2.m-3 Performer Upgrade
             .card-body
@@ -118,6 +118,19 @@ div
 
                 .col-md.align-self-center
                   img.img-fluid.img-thumbnail(src="~/assets/images/promo/echo-lake.jpg")
+    .row.justify-content-md-center
+      .col-md-10
+        .card-deck.mt-5
+          .card.bg-blue.mb-5
+            .card-head
+              h2.m-3 Individual Tickets
+            .card-body
+              .row
+                .col.align-self-center
+                  p Individual tickets for shows can be bought directly from the 
+                    a(href="/schedule" style="text-decoration: underline; color: #f9a01b;") schedule
+                    |  page.
+
 
 </template>
 

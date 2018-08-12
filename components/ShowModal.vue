@@ -7,19 +7,28 @@
 
     div.mt-2
       section(v-show="state==0")
-        ul.list-unstyled
+        ul.list-unstyled.mb-0
           li.media(v-for="act in show.acts")
             img.mr-3.align-self-center(:src="act.imageUrl + 'b.jpg'" v-if="act.imageUrl")
             .media-body.align-self-center
               h2.modal-act-name {{act.name}}
                 small &mdash; {{formatActType(act.type)}}
               h5(v-if="act.city") {{act.city}}, {{act.state}}
-              p.modal-act-description {{act.description}}
+              p.modal-act-description {{act.description}} 
+        .mb-3
+          a(href="#" @click="showUrl= !showUrl") Share this event
+          | &nbsp;
+          font-awesome-icon(:icon="['fas', 'share-square']" size="sm")
+          div(v-show="showUrl==true")
+            input#share-url.form-control.url(:value="getUrlForShow(show)" type="text" readonly onClick="this.select(); document.execCommand('copy')")
+
         div.text-center(v-if="show._id == '5b1ec986bd40f900140ae3a7'")
           p Shit-Faced Shakespeare is an independent show! Please purchase tickets to their show from 
             a(href="https://www.shit-facedshakespeare.com/tickets-for-austin-shows--atx.html" target="_blank" style="color: #f9a01b") their website
         div(v-else)
-          div.text-right(v-if="remaining<=0")
+          div.text-right(v-if="remaining === null")
+            strong.text-info Getting ticket information... 
+          div.text-right(v-if="remaining !== null && remaining<=0")
               strong.text-danger This show is sold out!
           div(v-else)
             .text-right
@@ -58,6 +67,7 @@
 
 <script>
   import axios from 'axios'
+  import limax from 'limax'
   import PayPal from '@/components/PayPal'
 
   export default {
@@ -68,8 +78,9 @@
         state: 0,
         email: "",
         quantity: 1,
-        remaining: 0,
+        remaining: null,
         clickCounter: 0,
+        showUrl: false
       }
     },
     computed: {
@@ -80,6 +91,11 @@
       }
     },
     methods: {
+      getUrlForShow(show) {
+        if (show.day && show.venue && show.time)
+          return 'https://oobfest.com/shows/' + show.day.toLowerCase() + '/' + show.venue.toLowerCase().split(' ').join('-') + '/' + show.time
+        else return ''
+      },
       paid(email) {
         this.email = email
         this.state = 2
@@ -118,6 +134,7 @@
       },
       reset() {
         this.state = 0
+        this.showUrl = false
         // Keep the same email address for convenience!
         this.quantity = 1
       },
@@ -155,8 +172,7 @@
     font-size: 1rem;
   }
 
-  .formy {
-    width: 100%;
-    max-width: 500px;
+  .url {
+    font-family: monospace;
   }
 </style>

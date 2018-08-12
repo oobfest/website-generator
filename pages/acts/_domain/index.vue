@@ -6,7 +6,7 @@ div(style="padding-bottom:3em")
       img.img-fluid.rounded.float-right(:src="scaledImageUrl")
     .col-md.act-details
       h1 {{actName}} 
-        small &mdash; {{showType}}
+        small &mdash; {{formatType(showType)}}
       h5 {{city}}, {{state}}
         span(v-if="country != 'US'") , {{country}}
       p {{publicDescription}}
@@ -59,6 +59,10 @@ export default {
     }
   },
   methods: {
+    formatType(type) {
+      if(type == 'Individual') return 'Sketch'
+      else return type;
+    },
     formatVenue(venue) {
       switch(venue) {
         case 'Hideout Up':        return 'the Hideout Theatre (Upstairs)'

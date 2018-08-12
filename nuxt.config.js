@@ -96,7 +96,7 @@ module.exports = {
   fontawesome: {
     imports: [
       {set: '@fortawesome/free-brands-svg-icons', icons: ['faGithub', 'faInstagram', 'faFacebook', 'faFlickr', 'faTwitter', 'faMedium']},
-      {set: '@fortawesome/free-solid-svg-icons', icons: ['faEnvelope']}
+      {set: '@fortawesome/free-solid-svg-icons', icons: ['faEnvelope', 'faShareSquare', 'faArrowCircleLeft']}
     ]
   },
 

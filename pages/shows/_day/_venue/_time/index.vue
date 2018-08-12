@@ -1,6 +1,7 @@
 <template lang='pug'>
 div
   h2 {{show.day}} at {{show.venue}}, {{formatTime(show.time)}}
+  // Add anchor tag to bottom of page here!
   ul.list-group.pb-3
     li.list-group-item(v-for="act in show.acts") 
       .media.align-items-center.flex-wrap-reverse
@@ -24,6 +25,8 @@ div
             button.btn.btn-primary(type="button" @click="state=3") Buy Tickets – ${{show.price}}
             | &nbsp;
             button.btn.btn-primary(type="button" @click="state++") Reserve with Badge
+            br
+            a(href="/schedule") See All Show
       section.form(v-show="state==1")
         .form-group
           label Badge Email
@@ -43,13 +46,15 @@ div
           h2 Success!
           p A confirmation email has been sent to &nbsp;
             span.code {{email}}
-        .text-right
-          button.btn.btn-primary(type="button" @click="$refs.showModal.hide()") Close
       section(v-show="state==3")
         paypal(:show-id="show._id", :remaining="remaining" @paid="paid")
         .text-center
           button.mt-3.btn.btn-secondary(type="button" @click="state=0") Cancel
-
+      section
+        .text-center
+          font-awesome-icon(:icon="['fas', 'arrow-circle-left']" size="sm") 
+          | &nbsp;
+          a(href="/schedule") Back to the full schedule
 </template>
 
 <script>
