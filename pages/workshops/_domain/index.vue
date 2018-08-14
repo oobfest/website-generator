@@ -19,8 +19,7 @@ div
         p {{workshop.day}}, {{getTime(workshop.time)}} at {{getVenue(workshop.venue)}}
         .text-center
           .form-group(v-if="workshop.sold < workshop.capacity")
-            button.btn.btn-primary.btn-lg(@click="state++" type="button") Get Reservation - $55*
-            p.mt-3 * Special "early bird" price until August 1st
+            button.btn.btn-primary.btn-lg(@click="state++" type="button") Get Reservation - $55
           .form-group(v-else-if="workshop.auditSold < workshop.auditCapacity")
             p Audit reservations available
             //button.btn.btn-primary.btn-lg(@click="state=10" type="button") Get Audit Reservation - $15
