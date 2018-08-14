@@ -25,6 +25,10 @@
                           span.act-name {{act.name}}
                           br
                           span.act-location(v-if="act.city && act.city != 'Austin'") {{act.city}}, {{act.state}}
+                    .media.mt-2(v-if="show.host") 
+                      .media-body.align-self-center
+                        small Hosted by 
+                          em {{show.host.name}}
                     .text-center(v-if="show.remaining <= 0")
                       span.sold-out Sold out!
 </template>

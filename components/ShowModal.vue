@@ -15,13 +15,18 @@
                 small &mdash; {{formatActType(act.type)}}
               h5(v-if="act.city") {{act.city}}, {{act.state}}
               p.modal-act-description {{act.description}} 
+        .media(v-if="show.host")
+          img.mr-3.mb-3.align-self-center(:src="show.host.imageUrl + 'b.jpg'" v-if="show.host.imageUrl")
+          .media-body.align-self-center
+            h2.modal-act-name Hosted by {{show.host.name}} 
+            p.modal-act-description {{show.host.bio}}
         .mb-3
-          a(href="#" @click="showUrl= !showUrl") Share this event
+          a(href="#" @click.prevent="showUrl= !showUrl") Share this event
           | &nbsp;
           font-awesome-icon(:icon="['fas', 'share-square']" size="sm")
           div(v-show="showUrl==true")
             //small The following links directly to 
-            input#share-url.form-control.url(:value="getUrlForShow(show)" type="text" readonly onClick="this.select(); document.execCommand('copy')")
+            input#share-url.form-control.url(:value="getUrlForShow(show)" type="text" readonly onClick="this.select(); this.setSelectionRange(0,99999); document.execCommand('copy')")
 
         div.text-center(v-if="show._id == '5b1ec986bd40f900140ae3a7'")
           p Shit-Faced Shakespeare is an independent show! Please purchase tickets to their show from 
