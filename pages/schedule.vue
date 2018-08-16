@@ -18,6 +18,9 @@
                     .mb-1
                       span.time {{formatTime(show.time)}}
                         span(v-if="show.endTime")  to {{show.endTime}}
+                    .media.mb-2(v-if="show.host") 
+                      .media-body.align-self-center
+                        small Hosted by {{show.host.name}}
                     ul.list-unstyled
                       li.media(v-for="act in show.acts") 
                         img(:src="act.imageUrl + 's.jpg'" v-if="act.imageUrl")
@@ -25,10 +28,6 @@
                           span.act-name {{act.name}}
                           br
                           span.act-location(v-if="act.city && act.city != 'Austin'") {{act.city}}, {{act.state}}
-                    .media.mt-2(v-if="show.host") 
-                      .media-body.align-self-center
-                        small Hosted by 
-                          em {{show.host.name}}
                     .text-center(v-if="show.remaining <= 0")
                       span.sold-out Sold out!
 </template>
