@@ -17,8 +17,8 @@ div
                   .card-title
                     h3.price
                       sup.dollar-sign $
-                      span 99*
-                  p.font-italic * Special "early bird" price for a limited time
+                      span 129
+                  //p.font-italic * Special "early bird" price for a limited time
                   ul
                     li All Shows (Including Headliners)
                     li Reserve Your Seat Ahead of Time
