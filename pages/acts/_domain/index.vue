@@ -5,7 +5,7 @@ div(style="padding-bottom:3em")
     .col-md
       img.img-fluid.rounded.float-right(:src="scaledImageUrl")
     .col-md.act-details
-      h1 {{actName}} 
+      h1 {{actName}}
         small &mdash; {{formatType(showType)}}
       h5 {{city}}, {{state}}
         span(v-if="country != 'US'") , {{country}}
@@ -24,7 +24,16 @@ div(style="padding-bottom:3em")
         ul
           li(v-for="show in shows")
             a(href="#" @click.prevent="modalModel=show" v-b-modal.show-modal) {{formatDay(show.day)}}, {{formatTime(show.time)}} at {{formatVenue(show.venue)}} 
+      // Aaron Megahack
+      section(v-if="actName == 'Aaron Behrens of Ghostland Observatory'")
+        h3 Shows
+        ul
+          li
+            a(href="https://oobfest.com/shows/saturday/spider-house/1030/") Saturday, 10:30pm at Spider House
+
       p.text-right
+        font-awesome-icon(:icon="['fas', 'arrow-circle-left']" size="sm") 
+        | &nbsp;
         a(href="/acts") Back to Lineup
 </template>
 

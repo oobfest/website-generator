@@ -48,7 +48,7 @@ div
         paypal(:show-id="show._id", :remaining="remaining" @paid="paid")
         .text-center
           button.mt-3.btn.btn-secondary(type="button" @click="state=0") Cancel
-      section
+      section.mt-3
         .text-center
           font-awesome-icon(:icon="['fas', 'arrow-circle-left']" size="sm") 
           | &nbsp;
