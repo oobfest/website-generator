@@ -25,17 +25,20 @@
           | &nbsp;
           font-awesome-icon(:icon="['fas', 'share-square']" size="sm")
           div(v-show="showUrl==true")
-            //small The following links directly to 
             input#share-url.form-control.url(:value="getUrlForShow(show)" type="text" readonly onClick="this.select(); this.setSelectionRange(0,99999); document.execCommand('copy')")
 
         div.text-center(v-if="show._id == '5b1ec986bd40f900140ae3a7'")
           p Shit-Faced Shakespeare is an independent show! Please purchase tickets to their show from 
             a(href="https://www.shit-facedshakespeare.com/tickets-for-austin-shows--atx.html" target="_blank" style="color: #f9a01b") their website
+
         div(v-else)
           div.text-right(v-if="remaining === null")
             strong.text-info Getting ticket information... 
           div.text-right(v-if="remaining !== null && remaining<=0")
               strong.text-danger This show is sold out!
+          div.text-center.text-info(v-else-if="boxOfficeClosed()")
+            p.m-0 Online sales for this show are now closed. 
+            p.m-0(v-show="remaining !== null && remaining > 0") Tickets are still available at the door!
           div(v-else)
             .text-right
               button.btn.btn-secondary(type="button" @click="$refs.showModal.hide()") Cancel
@@ -97,6 +100,14 @@
       }
     },
     methods: {
+      boxOfficeClosed() {
+        let now = new Date()
+        let nowDay = now.getDay() <= 1 ? now.getDay() + 5 : now.getDay() - 2 
+        let nowTime = ( (now.getHours() - 11) * 100) + now.getMinutes()
+        let showDay = ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday'].indexOf(this.show.day)
+        let showTime = this.show.time
+        return (nowDay > showDay) || ((nowDay == showDay) && (nowTime >= showTime))
+      },
       getUrlForShow(show) {
         if (show.day && show.venue && show.time)
           return 'https://oobfest.com/shows/' + show.day.toLowerCase() + '/' + show.venue.toLowerCase().split(' ').join('-') + '/' + show.time

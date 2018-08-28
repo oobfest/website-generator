@@ -3,6 +3,10 @@
   headline(:text="'Schedule'")
   show-modal(:show="modalModel")
   .row
+    .col.text-center
+      p.mb-0 Online sales for each show end one hour before show time. 
+      p Tickets will be for sale at the venue's box office. 
+  .row
     .col
       .tabs
         ul.nav.nav-pills
@@ -52,7 +56,7 @@ export default {
   data() {
     return {
       modalModel: {},
-      selectedDay: 'Tuesday',
+      selectedDay: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date().getDay()],
       days: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday'],
       venues: ['Hideout Down', 'Hideout Up', 'ColdTowne', 'Fallout', 'Velveeta', 'Spider House', 'Institution'],
       schedule: [
