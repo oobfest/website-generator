@@ -16,7 +16,7 @@
       option(v-for="n in remaining") {{n}}
   .row
     .col-3
-    .col-6
+    .col-8
       #paypal-button
 
 </template>

@@ -1,19 +1,33 @@
 <template lang="pug">
   div
-    .row.full-height
+    .row
       .col.text-center
         h1
           img.mx-auto.d-block(src="~/assets/images/logo.png" style="max-width:100%" alt="Out of Bounds Comedy Festival")
-        h3 Labor Day Weekend, August 28th to September 3rd in Austin, Texas
-        h2 
-          a(href="/schedule") Schedule is Live!
-        h5
-          a(href="/schedule") View Schedule
-        h5
-          a(href="/acts") View Lineup
-        p.mt-4
-          a(href="#learn-more") Learn More about OoB
-    .row.justify-content-center.dark-background.mt-3.pb-4(id="learn-more")
+        h3.m-4 Labor Day Weekend, August 28th to September 3rd in Austin, Texas
+        h5.m-4
+          a(href="/schedule") View the Schedule 
+            font-awesome-icon(:icon="['fas', 'arrow-circle-right']")
+    .row.light-background
+      .col.text-center
+        h2.m-3 Featured Act
+        .row.pb-4
+          .col.text-right
+            img(src="ian.jpg" style='max-width: 75%; box-shadow:3px 3px 3px rgba(0, 0, 0, .25);')
+          .col.text-left
+            h4 Ian Abramson &mdash; Stand Up
+            p
+              span.font-italic Saturday, 9:00pm at Spider House Ballroom 
+            p A regular contributer to 
+              span.font-italic The Onion 
+              | and creator of Comedy Central's 
+              span.font-italic 7 Minutes in Purgatory
+              |, Ian Abramson's stand up is a mix of precise wordplay, longer emotionally absurd jokes, and larger conceptual pieces.
+            .text-center
+              a.btn.btn-primary(href="https://oobfest.com/shows/saturday/spider-house/900") See Show Details 
+                font-awesome-icon(:icon="['fas', 'arrow-circle-right']")
+
+    .row.justify-content-center.dark-background.pb-4(id="learn-more")
       .col-md-6.text-center.m-3
         h4 What is Out of Bounds?
         p The  
@@ -50,6 +64,9 @@
         h4 Out of Bounds is a Certified 501(c)(3) Nonprofit
         p Our mission is to bring world-wide attention to the Austin comedy community by featuring improv, sketch, podcasts, musical, variety and stand-up, strengthening performer networks, providing educational opportunities to our talent and stimulating both Austin tourism and industry interest.
         img.img-fluid(src="~/assets/images/sponsors/cultural-arts-logo.png" style="width:100%; max-width: 500px")
+        h5.m-4
+          a(href="/schedule") View the Schedule 
+            font-awesome-icon(:icon="['fas', 'arrow-circle-right']")
     //.row.text-center.light-background.pb-4.justify-content-center
       .col
         h2.mt-4 Sponsors
